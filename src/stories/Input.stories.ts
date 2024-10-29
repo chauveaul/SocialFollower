@@ -4,6 +4,12 @@ import { Input } from "@/components/ui/input";
 
 const meta: Meta<typeof Input> = {
   component: Input,
+  parameters: {
+    backgrounds: {
+      // 👇 Set default background value for all component stories
+      default: "light",
+    },
+  },
   argTypes: {
     placeholder: String,
   },

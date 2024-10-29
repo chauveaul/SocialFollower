@@ -4,7 +4,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      colors: {},
+      colors: {
+        "bg-dark": "#272727",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
