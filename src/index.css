@@ -19,3 +19,8 @@
     --chart-5: 340 75% 55%;
   }
 }
+
+/* Check chatexpire for scrollbar*/
+::-webkit-scrollbar {
+  display: none;
+}
