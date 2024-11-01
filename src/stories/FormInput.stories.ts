@@ -6,7 +6,7 @@ const meta: Meta<typeof FormInput> = {
   component: FormInput,
   parameters: {
     backgrounds: {
-      default: "light",
+      default: "dark",
     },
   },
   argTypes: {
