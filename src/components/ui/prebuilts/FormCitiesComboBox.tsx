@@ -17,37 +17,41 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
+type ComboBoxProps = { country: string };
+
 const options: Object[] = [];
 
-export default function FormCitiesComboBox() {
+export default function FormCitiesComboBox({ country }: ComboBoxProps) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
   const [styleChanges, setStyleChanges] = useState("");
 
-  //Change to fetch for the contries
-  //Probably make a Component with both of these in to pass the country data
   useMemo(() => {
     fetch("https://countriesnow.space/api/v0.1/countries/cities", {
       method: "POST",
-      body: {
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         order: "asc",
         orderBy: "name",
-        country: "Nigeria",
-      },
+        country: `${country}`,
+      }),
     })
       .then((res) => res.json())
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
-        for (const country of data) {
+        for (const city of data) {
           options.push({
-            value: country.name.toLowerCase(),
-            label: country.name,
+            value: city.toLowerCase(),
+            label: city,
           });
         }
       });
-  }, []);
+  }, [country]);
 
   useMemo(() => {
     open ? setStyleChanges("border-b-0 rounded-b-none") : setStyleChanges("");

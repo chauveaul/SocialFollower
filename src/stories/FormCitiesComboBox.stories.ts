@@ -18,5 +18,6 @@ export const Primary: Story = {
   args: {
     primary: true,
     label: "Combobox",
+    country: "Canada",
   },
 };
