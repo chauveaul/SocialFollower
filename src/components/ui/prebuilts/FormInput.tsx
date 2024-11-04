@@ -3,9 +3,12 @@ import React, { useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function FormInput(args: Object) {
-  const name = args.name;
+type args = {
+  name: string;
+  password?: boolean;
+};
 
+export default function FormInput({ name, password }: args) {
   const [isInputFocused, setIsInputFocused] = useState(false);
 
   const labelRef = useRef<HTMLLabelElement>(null);
@@ -39,6 +42,7 @@ export default function FormInput(args: Object) {
         onFocus={() => setIsInputFocused(true)}
         onBlur={() => setIsInputFocused(false)}
         ref={inputRef}
+        type={password ? "password" : "text"}
       />
     </div>
   );
