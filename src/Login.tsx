@@ -28,6 +28,7 @@ export default function Login() {
         <p className="dark:text-slate-100 text-center text-xl">
           Don't have an account? Register{" "}
           <a href="#" className="">
+            {" "}
             here
           </a>
         </p>
