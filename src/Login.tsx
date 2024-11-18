@@ -1,43 +1,72 @@
 import FormInput from "@/components/ui/prebuilts/FormInput";
+import { IonIcon } from "@ionic/react";
+import { logoMicrosoft, logoGoogle, logoGithub } from "ionicons/icons";
 import { Button } from "@/components/ui/button";
 
 export default function Login() {
   return (
-    <div className="flex flex-col dark:bg-neutral-800 h-full w-full items-center gap-12 mt-10">
-      {/* Put the linear gradient in the span */}
-      <h1 className="dark:text-slate-100 text-6xl">
-        Login into <span className="">SocialFollower</span>
-      </h1>
-      <div className="flex flex-col gap-10 w-2/3 items-center">
-        <FormInput
-          name="Email"
-          className="w-[32rem] h-12 translate-x-[-20%]"
-          top="0.55rem"
-          left="-6"
-        />
-        <FormInput
-          name="Password"
-          className="w-[32rem] h-12 translate-x-[-20%]"
-          top="0.55rem"
-          left="-6"
-          password
-        />
-        <Button variant={"outline"} className="w-1/6 h-12 text-2xl rounded-xl">
-          Login
-        </Button>
-        <p className="dark:text-slate-100 text-center text-xl">
-          Don't have an account? Register{" "}
-          <a href="#" className="">
-            {" "}
-            here
-          </a>
-        </p>
-        <hr />
-        {/*Horizontal bar here*/}
-      </div>
-      <div className="flex">
-        <h3 className="dark:text-slate-100">Or login using providers</h3>
-        <div className="flex">{/* This will be the buttons for OAuth */}</div>
+    <div className="flex justify-center items-center w-screen h-screen">
+      <div className="flex flex-col dark:bg-neutral-800 w-screen items-center gap-14">
+        {/* Put the linear gradient in the span */}
+        <h1 className="dark:text-slate-100 text-6xl mb-4">
+          Login into{" "}
+          <span className="bg-gradient-to-r from-orange-500 to-rose-500 bg-clip-text text-transparent">
+            SocialFollower
+          </span>
+        </h1>
+        <div className="flex flex-col gap-10 w-2/3 items-center">
+          <FormInput
+            name="Email"
+            className="w-[32rem] h-12 translate-x-[-20%]"
+            top="0.55rem"
+            left="-6"
+          />
+          <FormInput
+            name="Password"
+            className="w-[32rem] h-12 translate-x-[-20%]"
+            top="0.55rem"
+            left="-6"
+            password
+          />
+          <Button
+            variant={"outline"}
+            className="w-1/6 h-12 text-2xl rounded-xl mt-2"
+          >
+            Login
+          </Button>
+          <p className="dark:text-white/[60%] text-center text-xl mt-2 border-b border-slate-100/[20%] pb-4">
+            Don't have an account? Register{" "}
+            <a href="#" className="">
+              {" "}
+              here
+            </a>
+          </p>
+        </div>
+        <div className="flex flex-col gap-4 -mt-10 justify-center items-center">
+          <h3 className="dark:text-white/[60%] text-2xl">
+            Or login using providers
+          </h3>
+          <div className="flex gap-6">
+            <div className="rounded-2xl border p-2 flex justify-center items-center">
+              <IonIcon
+                icon={logoMicrosoft}
+                className="text-4xl text-white/[60%]"
+              ></IonIcon>
+            </div>
+            <div className="rounded-2xl border p-2 flex justify-center items-center">
+              <IonIcon
+                icon={logoGoogle}
+                className="text-4xl text-white/[60%]"
+              ></IonIcon>
+            </div>
+            <div className="rounded-2xl border p-2 flex justify-center items-center">
+              <IonIcon
+                icon={logoGithub}
+                className="text-4xl text-white/[60%]"
+              ></IonIcon>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
