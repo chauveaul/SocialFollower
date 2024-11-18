@@ -7,7 +7,6 @@ export default function Login() {
   return (
     <div className="flex justify-center items-center w-screen h-screen">
       <div className="flex flex-col dark:bg-neutral-800 w-screen items-center gap-14">
-        {/* Put the linear gradient in the span */}
         <h1 className="dark:text-slate-100 text-6xl mb-4">
           Login into{" "}
           <span className="bg-gradient-to-r from-orange-500 to-rose-500 bg-clip-text text-transparent">
@@ -36,8 +35,7 @@ export default function Login() {
           </Button>
           <p className="dark:text-white/[60%] text-center text-xl mt-2 border-b border-slate-100/[20%] pb-4">
             Don't have an account? Register{" "}
-            <a href="#" className="">
-              {" "}
+            <a href="#" className="border-b">
               here
             </a>
           </p>
