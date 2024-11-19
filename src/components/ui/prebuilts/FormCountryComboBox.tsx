@@ -17,9 +17,17 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const options: Object[] = [];
+let options: Object[] = [];
 
-export default function FormCountryComboBox() {
+type countryForm = {
+  refValue: string;
+  refSetValue: (value: string) => void;
+};
+
+export default function FormCountryComboBox({
+  refValue,
+  refSetValue,
+}: countryForm) {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
 
@@ -40,6 +48,7 @@ export default function FormCountryComboBox() {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
+        options = [];
         for (const country of data) {
           options.push({
             value: country.name.toLowerCase(),
@@ -49,53 +58,58 @@ export default function FormCountryComboBox() {
       });
   }, []);
 
+  console.log(options);
+
   useMemo(() => {
     open ? setStyleChanges("border-b-0 rounded-b-none") : setStyleChanges("");
   }, [open]);
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className={`w-[200px] justify-between ${styleChanges}`}
-        >
-          {value
-            ? options.find((option) => option.value === value)?.label
-            : "Select option..."}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[202px] p-0">
-        <Command>
-          <CommandInput placeholder="Search options..." />
-          <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup>
-              {options.map((option) => (
-                <CommandItem
-                  key={option.value}
-                  value={option.value}
-                  onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
-                    setOpen(false);
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === option.value ? "opacity-100" : "opacity-0",
-                    )}
-                  />
-                  {option.label}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+    <div>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            role="combobox"
+            aria-expanded={open}
+            className={`w-[200px] justify-between ${styleChanges}`}
+          >
+            {value
+              ? options.find((option) => option.value === value)?.label
+              : "Select a Country..."}
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-[202px] p-0">
+          <Command>
+            <CommandInput placeholder="Search countries..." />
+            <CommandList>
+              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandGroup>
+                {options.map((option) => (
+                  <CommandItem
+                    key={option.value}
+                    value={option.value}
+                    onSelect={(currentValue) => {
+                      setValue(currentValue === value ? "" : currentValue);
+                      refSetValue(currentValue === value ? "" : currentValue);
+                      setOpen(false);
+                    }}
+                  >
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        value === option.value ? "opacity-100" : "opacity-0",
+                      )}
+                    />
+                    {option.label}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
   );
 }

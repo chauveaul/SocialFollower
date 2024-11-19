@@ -19,7 +19,7 @@ import {
 
 type ComboBoxProps = { country: string };
 
-const options: Object[] = [];
+let options: Object[] = [];
 
 export default function FormCitiesComboBox({ country }: ComboBoxProps) {
   const [open, setOpen] = useState(false);
@@ -44,6 +44,7 @@ export default function FormCitiesComboBox({ country }: ComboBoxProps) {
       .then((res) => res.data)
       .then((data) => {
         console.log(data);
+        options = [];
         for (const city of data) {
           options.push({
             value: city.toLowerCase(),
@@ -52,6 +53,8 @@ export default function FormCitiesComboBox({ country }: ComboBoxProps) {
         }
       });
   }, [country]);
+
+  console.log(options);
 
   useMemo(() => {
     open ? setStyleChanges("border-b-0 rounded-b-none") : setStyleChanges("");
@@ -68,7 +71,7 @@ export default function FormCitiesComboBox({ country }: ComboBoxProps) {
         >
           {value
             ? options.find((option) => option.value === value)?.label
-            : "Select option..."}
+            : "Select a city..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
