@@ -44,9 +44,12 @@ export default function Register() {
             left="-6"
             password
           />
-          <div className="flex gap-4">
+          <div className="flex gap-6 translate-x-[10%]">
             <FormCountryComboBox refValue={value} refSetValue={setValue} />
-            <FormCitiesComboBox country={value} />
+            {/* Change that for an input that checks if the inputted city is in the set. */}
+            {/* Might make a suggestion system as in "Did you mean ..." */}
+            {/*<FormCitiesComboBox country={value} />*/}
+            <FormInput name="City" country={value} className="!w-48" />
           </div>
           <Button
             variant={"outline"}
@@ -56,7 +59,7 @@ export default function Register() {
           </Button>
           <p className="dark:text-white/[60%] text-center text-xl mt-2">
             Already have an account? Login{" "}
-            <a href="#" className="border-b">
+            <a href="/login" className="border-b">
               here
             </a>
           </p>

@@ -47,7 +47,6 @@ export default function FormCountryComboBox({
       .then((res) => res.json())
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         options = [];
         for (const country of data) {
           options.push({
@@ -57,8 +56,6 @@ export default function FormCountryComboBox({
         }
       });
   }, []);
-
-  console.log(options);
 
   useMemo(() => {
     open ? setStyleChanges("border-b-0 rounded-b-none") : setStyleChanges("");

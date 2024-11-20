@@ -35,7 +35,7 @@ export default function Login() {
           </Button>
           <p className="dark:text-white/[60%] text-center text-xl mt-2 border-b border-slate-100/[20%] pb-4">
             Don't have an account? Register{" "}
-            <a href="#" className="border-b">
+            <a href="/register" className="border-b">
               here
             </a>
           </p>
