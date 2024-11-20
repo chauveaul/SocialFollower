@@ -43,7 +43,6 @@ export default function FormCitiesComboBox({ country }: ComboBoxProps) {
       .then((res) => res.json())
       .then((res) => res.data)
       .then((data) => {
-        console.log(data);
         options = [];
         for (const city of data) {
           options.push({

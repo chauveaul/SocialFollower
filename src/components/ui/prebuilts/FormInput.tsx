@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,7 +9,10 @@ type args = {
   top?: string;
   left?: string;
   password?: boolean;
+  country?: string;
 };
+
+let cities: Object[] = [];
 
 export default function FormInput({
   name,
@@ -17,6 +20,7 @@ export default function FormInput({
   className,
   top = "0.375rem",
   left,
+  country,
 }: args) {
   const [isInputFocused, setIsInputFocused] = useState(false);
 
@@ -46,6 +50,53 @@ export default function FormInput({
     labelRef.current.style.zIndex = "0";
   }
 
+  useMemo(() => {
+    try {
+      if (country) {
+        fetch("https://countriesnow.space/api/v0.1/countries/cities", {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            order: "asc",
+            orderBy: "name",
+            country: `${country}`,
+          }),
+        }).then((res) => {
+          if (res.ok) {
+            res
+              .json()
+              .then((res) => res.data)
+              .then((data) => {
+                cities = [];
+                if (data) {
+                  for (const city of data) {
+                    cities.push({
+                      value: city.toLowerCase(),
+                      label: city,
+                    });
+                  }
+                }
+              });
+          }
+        });
+      }
+    } catch (e) {
+      console.log("Bad request");
+    }
+  }, [country]);
+
+  if (country && cities && inputRef.current) {
+    if (!isInputInCities(cities, inputRef.current)) {
+      console.log("Not valid city");
+      //Do error handling or "Did you mean... here"
+    } else {
+      console.log("Valid city");
+    }
+  }
+
   return (
     <div className="relative w-80 h-10">
       <Label
@@ -69,4 +120,16 @@ export default function FormInput({
       />
     </div>
   );
+}
+
+function isInputInCities(
+  cities: Object[],
+  inputRef: HTMLInputElement,
+): boolean {
+  for (const city of cities) {
+    if (inputRef.value.toLowerCase() === city.value) {
+      return true;
+    }
+  }
+  return false;
 }
