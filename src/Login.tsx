@@ -1,4 +1,4 @@
-import FormInput from "@/components/ui/prebuilts/FormInput";
+import { FormInput } from "@/components/ui/prebuilts/FormInput";
 import { IonIcon } from "@ionic/react";
 import { logoMicrosoft, logoGoogle, logoGithub } from "ionicons/icons";
 import { Button } from "@/components/ui/button";

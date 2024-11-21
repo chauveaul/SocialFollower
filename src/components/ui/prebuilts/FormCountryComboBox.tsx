@@ -1,5 +1,7 @@
 import React, { useState, useMemo } from "react";
 
+import { useFormContext } from "react-hook-form";
+
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -19,94 +21,103 @@ import {
 
 let options: Object[] = [];
 
-type countryForm = {
+interface countryForm {
   refValue: string;
   refSetValue: (value: string) => void;
-};
-
-export default function FormCountryComboBox({
-  refValue,
-  refSetValue,
-}: countryForm) {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
-
-  const [styleChanges, setStyleChanges] = useState("");
-
-  useMemo(() => {
-    fetch(
-      "https://countriesnow.space/api/v0.1/countries/info?returns=country/filter",
-      {
-        method: "POST",
-        body: {
-          order: "asc",
-          orderBy: "name",
-        },
-      },
-    )
-      .then((res) => res.json())
-      .then((res) => res.data)
-      .then((data) => {
-        options = [];
-        for (const country of data) {
-          options.push({
-            value: country.name.toLowerCase(),
-            label: country.name,
-          });
-        }
-      });
-  }, []);
-
-  useMemo(() => {
-    open ? setStyleChanges("border-b-0 rounded-b-none") : setStyleChanges("");
-  }, [open]);
-
-  return (
-    <div>
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            role="combobox"
-            aria-expanded={open}
-            className={`w-[200px] justify-between ${styleChanges}`}
-          >
-            {value
-              ? options.find((option) => option.value === value)?.label
-              : "Select a Country..."}
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-[202px] p-0">
-          <Command>
-            <CommandInput placeholder="Search countries..." />
-            <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup>
-                {options.map((option) => (
-                  <CommandItem
-                    key={option.value}
-                    value={option.value}
-                    onSelect={(currentValue) => {
-                      setValue(currentValue === value ? "" : currentValue);
-                      refSetValue(currentValue === value ? "" : currentValue);
-                      setOpen(false);
-                    }}
-                  >
-                    <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        value === option.value ? "opacity-100" : "opacity-0",
-                      )}
-                    />
-                    {option.label}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover>
-    </div>
-  );
 }
+
+const FormCountryComboBox = React.forwardRef<HTMLSelectElement, countryForm>(
+  (props, ref) => {
+    const { register } = useFormContext();
+
+    const { refValue, refSetValue } = props;
+
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState("");
+
+    const [styleChanges, setStyleChanges] = useState("");
+
+    useMemo(() => {
+      fetch(
+        "https://countriesnow.space/api/v0.1/countries/info?returns=country/filter",
+        {
+          method: "POST",
+          body: {
+            order: "asc",
+            orderBy: "name",
+          },
+        },
+      )
+        .then((res) => res.json())
+        .then((res) => res.data)
+        .then((data) => {
+          options = [];
+          for (const country of data) {
+            options.push({
+              value: country.name.toLowerCase(),
+              label: country.name,
+            });
+          }
+        });
+    }, []);
+
+    useMemo(() => {
+      open ? setStyleChanges("border-b-0 rounded-b-none") : setStyleChanges("");
+    }, [open]);
+
+    return (
+      <div>
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              className={`w-[200px] justify-between ${styleChanges}`}
+            >
+              {value
+                ? options.find((option) => option.value === value)?.label
+                : "Select a Country..."}
+              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-[202px] p-0">
+            <Command>
+              <CommandInput placeholder="Search countries..." />
+              <CommandList>
+                <CommandEmpty>No results found.</CommandEmpty>
+                <CommandGroup>
+                  {options.map((option) => (
+                    <CommandItem
+                      key={option.value}
+                      value={option.value}
+                      onSelect={(currentValue) => {
+                        setValue(currentValue === value ? "" : currentValue);
+                        refSetValue(currentValue === value ? "" : currentValue);
+                        setOpen(false);
+                      }}
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          value === option.value ? "opacity-100" : "opacity-0",
+                        )}
+                      />
+                      {option.label}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+      </div>
+    );
+  },
+);
+//export default function FormCountryComboBox({
+//  refValue,
+//  refSetValue,
+//}: countryForm) {
+//}
+export { FormCountryComboBox };
