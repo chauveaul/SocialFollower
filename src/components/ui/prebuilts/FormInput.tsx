@@ -1,38 +1,36 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 
+import { useForm, useFormContext } from "react-hook-form";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-type args = {
+let cities: Object[] = [];
+
+interface args {
   name: string;
   className?: string;
   top?: string;
   left?: string;
   password?: boolean;
   country?: string;
-};
+}
 
-let cities: Object[] = [];
-
-export default function FormInput({
-  name,
-  password,
-  className,
-  top = "0.375rem",
-  left,
-  country,
-}: args) {
+const FormInput = React.forwardRef<HTMLInputElement, args>((props, ref) => {
+  const { name, className, top, left, password, country } = props;
   const [isInputFocused, setIsInputFocused] = useState(false);
 
   const labelRef = useRef<HTMLLabelElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const { register } = useFormContext();
 
   useEffect(() => {
     //set the inital left and top here
     if (labelRef.current) {
       labelRef.current.style.transition = "none";
       labelRef.current.style.left = left ? `${left}rem` : "0.5rem";
-      labelRef.current.style.top = top;
+      labelRef.current.style.top = `${top}`;
     }
   }, []);
 
@@ -44,7 +42,7 @@ export default function FormInput({
     labelRef.current.style.zIndex = "1";
   } else if (!isInputFocused && !inputRef.current?.value && labelRef.current) {
     labelRef.current.style.transition = "";
-    labelRef.current.style.top = top;
+    labelRef.current.style.top = `${top}`;
     labelRef.current.style.fontSize = "1.25rem";
     labelRef.current.style.left = left ? `${left}rem` : "0.5rem";
     labelRef.current.style.zIndex = "0";
@@ -91,7 +89,7 @@ export default function FormInput({
   if (country && cities && inputRef.current) {
     if (!isInputInCities(cities, inputRef.current)) {
       console.log("Not valid city");
-      //Do error handling or "Did you mean... here"
+      //Do error handling or "Did you mean..." here
     } else {
       console.log("Valid city");
     }
@@ -114,13 +112,24 @@ export default function FormInput({
         }
         autoComplete="off"
         onFocus={() => setIsInputFocused(true)}
-        onBlur={() => setIsInputFocused(false)}
-        ref={inputRef}
         type={password ? "password" : "text"}
+        {...register(name)}
+        onBlur={() => setIsInputFocused(false)}
       />
     </div>
   );
-}
+});
+//export default function FormInput({
+//  name,
+//  password,
+//  className,
+//  top = "0.375rem",
+//  left,
+//  country,
+//  value,
+//  onChange,
+//}: args) {
+//}
 
 function isInputInCities(
   cities: Object[],
@@ -133,3 +142,5 @@ function isInputInCities(
   }
   return false;
 }
+
+export { FormInput };
