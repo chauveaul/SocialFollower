@@ -4,10 +4,9 @@ import { FormInput } from "@/components/ui/prebuilts/FormInput";
 import { FormCountryComboBox } from "@/components/ui/prebuilts/FormCountryComboBox";
 import FormCitiesComboBox from "@/components/ui/prebuilts/FormCitiesComboBox";
 import { Button } from "@/components/ui/button";
+import { Form, FormField } from "@/components/ui/form";
 
 export default function Register() {
-  const { register } = useFormContext();
-
   const methods = useForm();
 
   const [value, setValue] = useState("");
@@ -27,20 +26,18 @@ export default function Register() {
           account
         </h1>
         <div className="flex flex-col gap-10 w-2/3 items-center">
-          <FormProvider {...methods}>
+          <Form {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)}>
               <FormInput
                 className="w-[32rem] h-12 translate-x-[-20%]"
                 top="0.55rem"
                 left="-6"
-                register={register}
                 name="Full Name"
               />
               <FormInput
                 className="w-[32rem] h-12 translate-x-[-20%]"
                 top="0.55rem"
                 left="-6"
-                register={register}
                 name="Email"
               />
               <FormInput
@@ -48,7 +45,6 @@ export default function Register() {
                 top="0.55rem"
                 left="-6"
                 password
-                register={register}
                 name="Password"
               />
               <FormInput
@@ -56,21 +52,15 @@ export default function Register() {
                 top="0.55rem"
                 left="-6"
                 password
-                register={register}
                 name="Repeat Password"
               />
               <div className="flex gap-6 translate-x-[10%]">
                 <FormCountryComboBox
                   refValue={value}
                   refSetValue={setValue}
-                  name="Country"
+                  form={methods}
                 />
-                <FormInput
-                  country={value}
-                  className="!w-48"
-                  register={register}
-                  name="City"
-                />
+                <FormInput country={value} className="!w-48" name="City" />
               </div>
               <Button
                 variant={"outline"}
@@ -86,7 +76,7 @@ export default function Register() {
                 </a>
               </p>
             </form>
-          </FormProvider>
+          </Form>
         </div>
         <div className="flex flex-col gap-4 -mt-10 justify-center items-center"></div>
       </div>

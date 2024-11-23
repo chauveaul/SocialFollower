@@ -14,7 +14,6 @@ interface args {
   left?: string;
   password?: boolean;
   country?: string;
-  register?: any;
 }
 
 const FormInput = React.forwardRef<HTMLInputElement, args>((props, ref) => {
@@ -90,7 +89,7 @@ const FormInput = React.forwardRef<HTMLInputElement, args>((props, ref) => {
   if (country && cities && inputRef.current) {
     if (!isInputInCities(cities, inputRef.current)) {
       console.log("Not valid city");
-      //Do error handling or "Did you mean... here"
+      //Do error handling or "Did you mean..." here
     } else {
       console.log("Valid city");
     }
@@ -113,9 +112,9 @@ const FormInput = React.forwardRef<HTMLInputElement, args>((props, ref) => {
         }
         autoComplete="off"
         onFocus={() => setIsInputFocused(true)}
-        onBlur={() => setIsInputFocused(false)}
         type={password ? "password" : "text"}
         {...register(name)}
+        onBlur={() => setIsInputFocused(false)}
       />
     </div>
   );

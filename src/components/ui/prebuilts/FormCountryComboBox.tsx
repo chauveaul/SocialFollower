@@ -18,22 +18,24 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { FormControl, FormItem, FormField, Form } from "@/components/ui/form";
+import { useForm } from "react-hook-form";
 
 let options: Object[] = [];
 
 interface countryForm {
   refValue: string;
   refSetValue: (value: string) => void;
+  form: any;
 }
 
 const FormCountryComboBox = React.forwardRef<HTMLSelectElement, countryForm>(
   (props, ref) => {
-    const { register } = useFormContext();
+    const { form } = props;
 
     const { refValue, refSetValue } = props;
 
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState("");
 
     const [styleChanges, setStyleChanges] = useState("");
 
@@ -65,53 +67,78 @@ const FormCountryComboBox = React.forwardRef<HTMLSelectElement, countryForm>(
       open ? setStyleChanges("border-b-0 rounded-b-none") : setStyleChanges("");
     }, [open]);
 
+    function onSubmit(data) {
+      console.log(data);
+    }
+
     return (
-      <div>
-        <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              role="combobox"
-              aria-expanded={open}
-              className={`w-[200px] justify-between ${styleChanges}`}
-            >
-              {value
-                ? options.find((option) => option.value === value)?.label
-                : "Select a Country..."}
-              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-[202px] p-0">
-            <Command>
-              <CommandInput placeholder="Search countries..." />
-              <CommandList>
-                <CommandEmpty>No results found.</CommandEmpty>
-                <CommandGroup>
-                  {options.map((option) => (
-                    <CommandItem
-                      key={option.value}
-                      value={option.value}
-                      onSelect={(currentValue) => {
-                        setValue(currentValue === value ? "" : currentValue);
-                        refSetValue(currentValue === value ? "" : currentValue);
-                        setOpen(false);
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4",
-                          value === option.value ? "opacity-100" : "opacity-0",
-                        )}
-                      />
-                      {option.label}
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              </CommandList>
-            </Command>
-          </PopoverContent>
-        </Popover>
-      </div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <FormField
+            control={form.control}
+            name="Country"
+            render={({ field }) => (
+              <FormItem>
+                <Popover open={open} onOpenChange={setOpen}>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={open}
+                        className={`w-[200px] justify-between ${styleChanges}`}
+                      >
+                        {field.value
+                          ? options.find(
+                            (option) => option.value === field.value,
+                          )?.label
+                          : "Select a Country..."}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-[202px] p-0">
+                    <Command>
+                      <CommandInput placeholder="Search countries..." />
+                      <CommandList>
+                        <CommandEmpty>No results found.</CommandEmpty>
+                        <CommandGroup>
+                          {options.map((option) => (
+                            <FormControl>
+                              <CommandItem
+                                key={option.value}
+                                value={option.value}
+                                onSelect={(currentValue) => {
+                                  field.value =
+                                    field.value === currentValue
+                                      ? ""
+                                      : currentValue;
+                                  form.setValue("Country", currentValue);
+                                  setOpen(false);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    field.value === option.value
+                                      ? "opacity-100"
+                                      : "opacity-0",
+                                  )}
+                                />
+                                {option.label}
+                              </CommandItem>
+                            </FormControl>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </FormItem>
+            )}
+          />
+        </form>
+      </Form>
     );
   },
 );
