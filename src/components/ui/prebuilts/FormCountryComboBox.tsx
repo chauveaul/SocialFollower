@@ -67,9 +67,7 @@ const FormCountryComboBox = React.forwardRef<HTMLSelectElement, countryForm>(
       open ? setStyleChanges("border-b-0 rounded-b-none") : setStyleChanges("");
     }, [open]);
 
-    function onSubmit(data) {
-      console.log(data);
-    }
+    function onSubmit(data) {}
 
     return (
       <Form {...form}>
@@ -90,8 +88,8 @@ const FormCountryComboBox = React.forwardRef<HTMLSelectElement, countryForm>(
                       >
                         {field.value
                           ? options.find(
-                            (option) => option.value === field.value,
-                          )?.label
+                              (option) => option.value === field.value,
+                            )?.label
                           : "Select a Country..."}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
@@ -114,6 +112,7 @@ const FormCountryComboBox = React.forwardRef<HTMLSelectElement, countryForm>(
                                       ? ""
                                       : currentValue;
                                   form.setValue("Country", currentValue);
+                                  refSetValue(currentValue);
                                   setOpen(false);
                                 }}
                               >
