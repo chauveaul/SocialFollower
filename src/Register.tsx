@@ -11,23 +11,24 @@ export default function Register() {
 
   const [value, setValue] = useState("");
 
-  function onSubmit(data) {
-    console.log(data);
-  }
+  function onSubmit(data) {}
 
   return (
     <div className="flex justify-center items-center w-screen h-screen">
       <div className="flex flex-col dark:bg-neutral-800 w-screen items-center gap-14">
-        <h1 className="dark:text-slate-100 text-6xl mb-4">
+        <h1 className="dark:text-slate-100 text-6xl">
           Make a{" "}
           <span className="bg-gradient-to-r from-orange-500 to-rose-500 bg-clip-text text-transparent">
             SocialFollower
           </span>{" "}
           account
         </h1>
-        <div className="flex flex-col gap-10 w-2/3 items-center">
+        <div className="flex flex-col w-2/3 items-center">
           <Form {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)}>
+            <form
+              onSubmit={methods.handleSubmit(onSubmit)}
+              className="flex flex-col gap-10 w-2/3 items-center"
+            >
               <FormInput
                 className="w-[32rem] h-12 translate-x-[-20%]"
                 top="0.55rem"

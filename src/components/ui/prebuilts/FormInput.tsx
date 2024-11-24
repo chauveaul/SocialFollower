@@ -19,6 +19,7 @@ interface args {
 const FormInput = React.forwardRef<HTMLInputElement, args>((props, ref) => {
   const { name, className, top, left, password, country } = props;
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   const labelRef = useRef<HTMLLabelElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -40,7 +41,7 @@ const FormInput = React.forwardRef<HTMLInputElement, args>((props, ref) => {
     labelRef.current.style.fontSize = "0.8rem";
     labelRef.current.style.left = left ? `${Number(left) + 0.3}rem` : "0.8rem";
     labelRef.current.style.zIndex = "1";
-  } else if (!isInputFocused && !inputRef.current?.value && labelRef.current) {
+  } else if (!isInputFocused && !inputValue && labelRef.current) {
     labelRef.current.style.transition = "";
     labelRef.current.style.top = `${top}`;
     labelRef.current.style.fontSize = "1.25rem";
@@ -86,12 +87,12 @@ const FormInput = React.forwardRef<HTMLInputElement, args>((props, ref) => {
     }
   }, [country]);
 
-  if (country && cities && inputRef.current) {
-    if (!isInputInCities(cities, inputRef.current)) {
-      console.log("Not valid city");
+  if (country && cities && inputValue) {
+    if (!isInputInCities(cities, inputValue)) {
+      //Invalid City
       //Do error handling or "Did you mean..." here
     } else {
-      console.log("Valid city");
+      //Valid city
     }
   }
 
@@ -111,9 +112,13 @@ const FormInput = React.forwardRef<HTMLInputElement, args>((props, ref) => {
           className
         }
         autoComplete="off"
-        onFocus={() => setIsInputFocused(true)}
         type={password ? "password" : "text"}
-        {...register(name)}
+        {...register(name, {
+          onChange: ({ target: { value, name } }) => {
+            setInputValue(value);
+          },
+        })}
+        onFocus={() => setIsInputFocused(true)}
         onBlur={() => setIsInputFocused(false)}
       />
     </div>
@@ -131,12 +136,9 @@ const FormInput = React.forwardRef<HTMLInputElement, args>((props, ref) => {
 //}: args) {
 //}
 
-function isInputInCities(
-  cities: Object[],
-  inputRef: HTMLInputElement,
-): boolean {
+function isInputInCities(cities: Object[], inputValue: string): boolean {
   for (const city of cities) {
-    if (inputRef.value.toLowerCase() === city.value) {
+    if (inputValue.toLowerCase() === city.value) {
       return true;
     }
   }
