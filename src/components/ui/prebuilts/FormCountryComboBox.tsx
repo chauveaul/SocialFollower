@@ -64,7 +64,7 @@ const FormCountryComboBox = React.forwardRef<HTMLSelectElement, countryForm>(
     }, []);
 
     useMemo(() => {
-      open ? setStyleChanges("border-b-0 rounded-b-none") : setStyleChanges("");
+      open ? setStyleChanges("border-t-0 rounded-t-none") : setStyleChanges("");
     }, [open]);
 
     function onSubmit(data) {}
@@ -90,14 +90,14 @@ const FormCountryComboBox = React.forwardRef<HTMLSelectElement, countryForm>(
                           ? options.find(
                               (option) => option.value === field.value,
                             )?.label
-                          : "Select a Country..."}
+                          : "Select a Country"}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </FormControl>
                   </PopoverTrigger>
-                  <PopoverContent className="w-[202px] p-0">
+                  <PopoverContent className="w-[202px] p-0" side="top">
                     <Command>
-                      <CommandInput placeholder="Search countries..." />
+                      <CommandInput placeholder="Search countries" />
                       <CommandList>
                         <CommandEmpty>No results found.</CommandEmpty>
                         <CommandGroup>
