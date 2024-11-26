@@ -20,7 +20,14 @@ const router = createBrowserRouter(
 
 export default function App({ routes }) {
   const client = new Client();
-  client.setProject("671d9734ace647d7440b");
+  console.log(process.env.NODE_ENV);
+  if (process.env.NODE_ENV === "development") {
+    client
+      .setEndpoint("http://localhost/v1")
+      .setProject("673e5e130010788ad4c9");
+  } else {
+    client.setProject("671d9734ace647d7440b");
+  }
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <RouterProvider router={router} />
