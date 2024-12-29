@@ -5,14 +5,21 @@ import { useForm, useFormContext } from "react-hook-form";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { error } from "console";
 
 let cities: Object[] = [];
 
 const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
   (props, ref) => {
-    const { name, className, top, left, password, country, valueAsNumber } =
-      props;
+    const {
+      name,
+      className,
+      top,
+      left,
+      password,
+      error,
+      country,
+      valueAsNumber,
+    } = props;
     const [isInputFocused, setIsInputFocused] = useState(false);
     const [inputValue, setInputValue] = useState("");
 

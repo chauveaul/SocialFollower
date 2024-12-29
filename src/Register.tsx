@@ -61,7 +61,12 @@ export default function Register() {
                   refSetValue={setValue}
                   form={methods}
                 />
-                <FormInput country={value} className="!w-48" name="City" />
+                <FormInput
+                  country={value}
+                  className="!w-48"
+                  name="City"
+                  top="0.35rem"
+                />
               </div>
               <Button
                 variant={"outline"}
