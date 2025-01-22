@@ -28,7 +28,12 @@ export type FormInputProps = {
   country?: string;
 };
 
-export type ComboBoxProps = {};
+export type ComboBoxProps = {
+  refValue: string;
+  refSetValue: (value: string) => void;
+  form: any;
+  error: FieldError | undefined;
+};
 
 export type ValidFieldNames =
   | "Full Name"

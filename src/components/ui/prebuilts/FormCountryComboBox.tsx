@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { ComboBoxProps } from "@/lib/types";
 
 import { useFormContext } from "react-hook-form";
 
@@ -23,17 +24,9 @@ import { useForm } from "react-hook-form";
 
 let options: Object[] = [];
 
-interface countryForm {
-  refValue: string;
-  refSetValue: (value: string) => void;
-  form: any;
-}
-
-const FormCountryComboBox = React.forwardRef<HTMLSelectElement, countryForm>(
+const FormCountryComboBox = React.forwardRef<HTMLSelectElement, ComboBoxProps>(
   (props, ref) => {
-    const { form } = props;
-
-    const { refValue, refSetValue } = props;
+    const { form, error, refValue, refSetValue } = props;
 
     const [open, setOpen] = useState(false);
 

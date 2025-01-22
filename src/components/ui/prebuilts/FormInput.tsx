@@ -101,32 +101,34 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
     }
 
     return (
-      <div className="relative w-80 h-10">
-        <Label
-          htmlFor="input"
-          className="form--label text-xl dark:text-slate-100 absolute left-2 top-1.5 px-2 text-slate-100 transition-all delay-200 bg-neutral-800"
-          ref={labelRef}
-        >
-          {name}
-        </Label>
-        <Input
-          id="input"
-          className={
-            "form--input absolute top-0 left-0 w-full h-full transition-all hover:!border-amber-100 focus:!border-amber-200 !bg-opacity-0 " +
-            className
-          }
-          autoComplete="off"
-          type={password ? "password" : "text"}
-          {...register(name, {
-            onChange: ({ target: { value, name } }) => {
-              setInputValue(value);
-            },
-            valueAsNumber,
-          })}
-          onFocus={() => setIsInputFocused(true)}
-          onBlur={() => setIsInputFocused(false)}
-        />
-        {error && <span className="error-message">{error.message}</span>}
+      <div>
+        <div className="relative w-80 h-10">
+          <Label
+            htmlFor="input"
+            className="form--label text-xl dark:text-slate-100 absolute left-2 top-1.5 px-2 text-slate-100 transition-all delay-200 bg-neutral-800"
+            ref={labelRef}
+          >
+            {name}
+          </Label>
+          <Input
+            id="input"
+            className={
+              "form--input absolute top-0 left-0 w-full h-full transition-all hover:!border-amber-100 focus:!border-amber-200 !bg-opacity-0 " +
+              className
+            }
+            autoComplete="off"
+            type={password ? "password" : "text"}
+            {...register(name, {
+              onChange: ({ target: { value, name } }) => {
+                setInputValue(value);
+              },
+              valueAsNumber,
+            })}
+            onFocus={() => setIsInputFocused(true)}
+            onBlur={() => setIsInputFocused(false)}
+          />
+        </div>
+        {error && <span className="text-red-600">{error.message}</span>}
       </div>
     );
   },

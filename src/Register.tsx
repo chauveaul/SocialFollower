@@ -1,13 +1,17 @@
-import React, { useRef, useState } from "react";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { FormInput } from "@/components/ui/prebuilts/FormInput";
 import { FormCountryComboBox } from "@/components/ui/prebuilts/FormCountryComboBox";
-import FormCitiesComboBox from "@/components/ui/prebuilts/FormCitiesComboBox";
 import { Button } from "@/components/ui/button";
-import { Form, FormField } from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
+import { RegisterFormData } from "@/lib/types";
+import { getRegistrationSchema } from "@/lib/form-validation";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function Register() {
-  const methods = useForm();
+  const methods = useForm<RegisterFormData>({
+    resolver: zodResolver(getRegistrationSchema()),
+  });
 
   const [value, setValue] = useState("");
 
@@ -34,12 +38,14 @@ export default function Register() {
                 top="0.55rem"
                 left="-6"
                 name="Full Name"
+                error={methods.formState.errors.fullName}
               />
               <FormInput
                 className="w-[32rem] h-12 translate-x-[-20%]"
                 top="0.55rem"
                 left="-6"
                 name="Email"
+                error={methods.formState.errors.email}
               />
               <FormInput
                 className="w-[32rem] h-12 translate-x-[-20%]"
@@ -47,6 +53,7 @@ export default function Register() {
                 left="-6"
                 password
                 name="Password"
+                error={methods.formState.errors.password}
               />
               <FormInput
                 className="w-[32rem] h-12 translate-x-[-20%]"
@@ -54,18 +61,21 @@ export default function Register() {
                 left="-6"
                 password
                 name="Repeat Password"
+                error={methods.formState.errors.repeatPassword}
               />
               <div className="flex gap-6 translate-x-[10%]">
                 <FormCountryComboBox
                   refValue={value}
                   refSetValue={setValue}
                   form={methods}
+                  error={methods.formState.errors.country}
                 />
                 <FormInput
                   country={value}
                   className="!w-48"
                   name="City"
                   top="0.35rem"
+                  error={methods.formState.errors.city}
                 />
               </div>
               <Button
