@@ -108,10 +108,6 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
       }
     }
 
-    if (isInputFocused) {
-      console.log(inputValue);
-    }
-
     return (
       <div>
         <div className="relative w-80 h-10">

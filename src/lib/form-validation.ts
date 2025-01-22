@@ -18,7 +18,7 @@ export const RegistrationSchema: ZodType<RegisterFormData> = z
       .string()
       .min(4, { message: "Please enter at least 4 characters" }),
     city: z.string().min(1, { message: "Please enter a city" }),
-    country: z.string().min(1, { message: "Please select a country" }),
+    country: z.string({ message: "Please select a country" }),
   })
   .superRefine(({ repeatPassword, password }, ctx) => {
     if (repeatPassword !== password) {
