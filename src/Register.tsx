@@ -5,17 +5,21 @@ import { FormCountryComboBox } from "@/components/ui/prebuilts/FormCountryComboB
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { RegisterFormData } from "@/lib/types";
-import { getRegistrationSchema } from "@/lib/form-validation";
+import { RegistrationSchema } from "@/lib/form-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function Register() {
-  const methods = useForm<RegisterFormData>({
-    resolver: zodResolver(getRegistrationSchema()),
+  const { ...methods } = useForm<RegisterFormData>({
+    resolver: zodResolver(RegistrationSchema),
   });
 
   const [value, setValue] = useState("");
 
-  function onSubmit(data) {}
+  function onSubmit(data) {
+    console.log(data);
+  }
+
+  console.log(methods.getValues());
 
   return (
     <div className="flex justify-center items-center w-screen h-screen">
@@ -37,14 +41,16 @@ export default function Register() {
                 className="w-[32rem] h-12 translate-x-[-20%]"
                 top="0.55rem"
                 left="-6"
-                name="Full Name"
+                labelName="Full Name"
+                name="fullName"
                 error={methods.formState.errors.fullName}
               />
               <FormInput
                 className="w-[32rem] h-12 translate-x-[-20%]"
                 top="0.55rem"
                 left="-6"
-                name="Email"
+                labelName="Email"
+                name="email"
                 error={methods.formState.errors.email}
               />
               <FormInput
@@ -52,7 +58,8 @@ export default function Register() {
                 top="0.55rem"
                 left="-6"
                 password
-                name="Password"
+                labelName="Password"
+                name="password"
                 error={methods.formState.errors.password}
               />
               <FormInput
@@ -60,20 +67,23 @@ export default function Register() {
                 top="0.55rem"
                 left="-6"
                 password
-                name="Repeat Password"
+                labelName="Repeat Password"
+                name="repeatPassword"
                 error={methods.formState.errors.repeatPassword}
               />
               <div className="flex gap-6 translate-x-[10%]">
                 <FormCountryComboBox
                   refValue={value}
                   refSetValue={setValue}
+                  name="country"
                   form={methods}
                   error={methods.formState.errors.country}
                 />
                 <FormInput
                   country={value}
                   className="!w-48"
-                  name="City"
+                  labelName="City"
+                  name="city"
                   top="0.35rem"
                   error={methods.formState.errors.city}
                 />

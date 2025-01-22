@@ -18,6 +18,7 @@ export type FormInputProps = {
   type: string;
   placeholder: string;
   name: ValidFieldNames;
+  labelName: string;
   register: UseFormRegister<FormData>;
   error: FieldError | undefined;
   valueAsNumber?: boolean;
@@ -33,12 +34,13 @@ export type ComboBoxProps = {
   refSetValue: (value: string) => void;
   form: any;
   error: FieldError | undefined;
+  name: ValidFieldNames;
 };
 
 export type ValidFieldNames =
-  | "Full Name"
-  | "Email"
-  | "Password"
-  | "Repeat Password"
-  | "Country"
-  | "City";
+  | "fullName"
+  | "email"
+  | "password"
+  | "repeatPassword"
+  | "country"
+  | "city";

@@ -11,6 +11,7 @@ let cities: Object[] = [];
 const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
   (props, ref) => {
     const {
+      labelName,
       name,
       className,
       top,
@@ -52,6 +53,13 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
       labelRef.current.style.left = left ? `${left}rem` : "0.5rem";
       labelRef.current.style.zIndex = "0";
     }
+
+    const { ref: registerRef, ...rest } = register(name, {
+      onChange: ({ target: { value } }) => {
+        setInputValue(value);
+      },
+      valueAsNumber,
+    });
 
     useMemo(() => {
       try {
@@ -100,6 +108,10 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
       }
     }
 
+    if (isInputFocused) {
+      console.log(inputValue);
+    }
+
     return (
       <div>
         <div className="relative w-80 h-10">
@@ -108,7 +120,7 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
             className="form--label text-xl dark:text-slate-100 absolute left-2 top-1.5 px-2 text-slate-100 transition-all delay-200 bg-neutral-800"
             ref={labelRef}
           >
-            {name}
+            {labelName}
           </Label>
           <Input
             id="input"
