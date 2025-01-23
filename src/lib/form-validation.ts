@@ -25,7 +25,7 @@ export const RegistrationSchema: ZodType<RegisterFormData> = z
       ctx.addIssue({
         code: "custom",
         message: "The passwords do not match",
-        path: ["confirmPassword"],
+        path: ["repeatPassword"],
       });
     }
   });

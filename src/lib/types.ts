@@ -1,4 +1,9 @@
-import { FieldError, UseFormRegister } from "react-hook-form";
+import {
+  FieldError,
+  UseFormClearErrors,
+  UseFormRegister,
+  UseFormSetError,
+} from "react-hook-form";
 
 export type RegisterFormData = {
   fullName: string;
@@ -16,15 +21,17 @@ export type LoginFormData = {
 
 export type FormInputProps = {
   type: string;
-  placeholder: string;
+  placeholder?: string;
   name: ValidFieldNames;
   labelName: string;
   register: UseFormRegister<FormData>;
   error: FieldError | undefined;
+  setError: UseFormSetError<RegisterFormData>;
+  clearErrors: UseFormClearErrors<RegisterFormData>;
   valueAsNumber?: boolean;
-  className: string;
-  top: string;
-  left: string;
+  className?: string;
+  top?: string;
+  left?: string;
   password: boolean;
   country?: string;
 };

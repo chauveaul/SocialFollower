@@ -9,7 +9,7 @@ import { RegistrationSchema } from "@/lib/form-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function Register() {
-  const { ...methods } = useForm<RegisterFormData>({
+  const { setError, clearErrors, ...methods } = useForm<RegisterFormData>({
     resolver: zodResolver(RegistrationSchema),
   });
 
@@ -18,8 +18,6 @@ export default function Register() {
   function onSubmit(data) {
     console.log(data);
   }
-
-  console.log(methods.getValues());
 
   return (
     <div className="flex justify-center items-center w-screen h-screen">
@@ -34,7 +32,16 @@ export default function Register() {
         <div className="flex flex-col w-2/3 items-center">
           <Form {...methods}>
             <form
-              onSubmit={methods.handleSubmit(onSubmit)}
+              onSubmit={methods.handleSubmit((data) => {
+                if (methods.formState.errors.city) {
+                  setError("city", {
+                    type: "custom",
+                    message: "This city isn't valid",
+                  });
+                  return;
+                }
+                onSubmit(data);
+              })}
               className="flex flex-col gap-10 w-2/3 items-center"
             >
               <FormInput
@@ -86,6 +93,8 @@ export default function Register() {
                   name="city"
                   top="0.35rem"
                   error={methods.formState.errors.city}
+                  setError={setError}
+                  clearErrors={clearErrors}
                 />
               </div>
               <Button

@@ -1,12 +1,24 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
 import { FormInputProps } from "@/lib/types";
+import { custom, ZodError, ZodIssue } from "zod";
 
-import { useForm, useFormContext } from "react-hook-form";
+import { set, useFormContext } from "react-hook-form";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { clear } from "console";
 
 let cities: Object[] = [];
+
+const cityIssue: ZodIssue[] = [
+  {
+    code: "custom",
+    message: "This city isn't valid",
+    path: ["city"],
+  },
+];
+
+const cityError = new ZodError(cityIssue);
 
 const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
   (props, ref) => {
@@ -20,12 +32,13 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
       error,
       country,
       valueAsNumber,
+      setError,
+      clearErrors,
     } = props;
     const [isInputFocused, setIsInputFocused] = useState(false);
     const [inputValue, setInputValue] = useState("");
 
     const labelRef = useRef<HTMLLabelElement>(null);
-    const inputRef = useRef<HTMLInputElement>(null);
 
     const { register } = useFormContext();
 
@@ -53,13 +66,6 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
       labelRef.current.style.left = left ? `${left}rem` : "0.5rem";
       labelRef.current.style.zIndex = "0";
     }
-
-    const { ref: registerRef, ...rest } = register(name, {
-      onChange: ({ target: { value } }) => {
-        setInputValue(value);
-      },
-      valueAsNumber,
-    });
 
     useMemo(() => {
       try {
@@ -99,14 +105,31 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
       }
     }, [country]);
 
-    if (country && cities && inputValue) {
-      if (!isInputInCities(cities, inputValue)) {
-        //Invalid City
+    const [isCityInCities, setIsCityInCities] = useState(false);
+
+    useEffect(() => {
+      if (!isCityInCities && inputValue && name === "city") {
+        cityError.issues.forEach((issue) => {
+          console.log(name);
+          console.log(setError);
+          setError("city", {
+            type: "custom",
+            message: issue.message,
+          });
+        });
         //Do error handling or "Did you mean..." here
       } else {
-        //Valid city
+        if (name === "city") {
+          clearErrors("city");
+        }
       }
-    }
+    }, [isCityInCities, isInputFocused, inputValue, setError]);
+
+    useEffect(() => {
+      if (country && cities && inputValue) {
+        setIsCityInCities(isInputInCities(cities, inputValue));
+      }
+    }, [country, cities, inputValue]);
 
     return (
       <div>
@@ -135,8 +158,21 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
             onFocus={() => setIsInputFocused(true)}
             onBlur={() => setIsInputFocused(false)}
           />
+          {error &&
+            (name !== "city" ? (
+              <span className="text-red-600 absolute left-[-6rem] top-[3rem]">
+                {error.message}
+              </span>
+            ) : (
+              ""
+            ))}
         </div>
-        {error && <span className="text-red-600">{error.message}</span>}
+        {error &&
+          (name === "city" ? (
+            <span className="text-red-600">{error.message}</span>
+          ) : (
+            ""
+          ))}
       </div>
     );
   },
@@ -145,9 +181,11 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
 function isInputInCities(cities: Object[], inputValue: string): boolean {
   for (const city of cities) {
     if (inputValue.toLowerCase() === city.value) {
+      console.log("True");
       return true;
     }
   }
+  console.log("False");
   return false;
 }
 
