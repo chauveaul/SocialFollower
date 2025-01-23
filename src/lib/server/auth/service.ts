@@ -1,4 +1,6 @@
 import { Client, Account, ID, AppwriteException } from "appwrite";
+import { RegisterFormData } from "@/lib/types";
+import App from "@/App";
 
 const client =
   process.env.NODE_ENV === "development"
@@ -8,7 +10,8 @@ const client =
     : new Client().setProject("671d9734ace647d7440b");
 
 export default class AuthService {
-  static async registerUser(email: string, password: string) {
+  static async registerUser(formData: RegisterFormData) {
+    const { email, password } = formData;
     const account = new Account(client);
 
     try {
@@ -19,6 +22,10 @@ export default class AuthService {
       //If this error is thrown, there already exists a user with this email
       throw new AppwriteException(err.message);
     }
+    return {
+      status: 200,
+      message: "The account has been successfully created.",
+    };
   }
 
   static async loginUser(email: string, password: string) {
