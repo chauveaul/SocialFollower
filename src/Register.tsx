@@ -1,17 +1,23 @@
-import React, { useRef, useState } from "react";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { FormInput } from "@/components/ui/prebuilts/FormInput";
 import { FormCountryComboBox } from "@/components/ui/prebuilts/FormCountryComboBox";
-import FormCitiesComboBox from "@/components/ui/prebuilts/FormCitiesComboBox";
 import { Button } from "@/components/ui/button";
-import { Form, FormField } from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
+import { RegisterFormData } from "@/lib/types";
+import { RegistrationSchema } from "@/lib/form-validation";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function Register() {
-  const methods = useForm();
+  const { setError, clearErrors, ...methods } = useForm<RegisterFormData>({
+    resolver: zodResolver(RegistrationSchema),
+  });
 
   const [value, setValue] = useState("");
 
-  function onSubmit(data) {}
+  function onSubmit(data) {
+    console.log(data);
+  }
 
   return (
     <div className="flex justify-center items-center w-screen h-screen">
@@ -26,46 +32,69 @@ export default function Register() {
         <div className="flex flex-col w-2/3 items-center">
           <Form {...methods}>
             <form
-              onSubmit={methods.handleSubmit(onSubmit)}
+              onSubmit={methods.handleSubmit((data) => {
+                if (methods.formState.errors.city) {
+                  setError("city", {
+                    type: "custom",
+                    message: "This city isn't valid",
+                  });
+                  return;
+                }
+                onSubmit(data);
+              })}
               className="flex flex-col gap-10 w-2/3 items-center"
             >
               <FormInput
                 className="w-[32rem] h-12 translate-x-[-20%]"
                 top="0.55rem"
                 left="-6"
-                name="Full Name"
+                labelName="Full Name"
+                name="fullName"
+                error={methods.formState.errors.fullName}
               />
               <FormInput
                 className="w-[32rem] h-12 translate-x-[-20%]"
                 top="0.55rem"
                 left="-6"
-                name="Email"
+                labelName="Email"
+                name="email"
+                error={methods.formState.errors.email}
               />
               <FormInput
                 className="w-[32rem] h-12 translate-x-[-20%]"
                 top="0.55rem"
                 left="-6"
                 password
-                name="Password"
+                labelName="Password"
+                name="password"
+                error={methods.formState.errors.password}
               />
               <FormInput
                 className="w-[32rem] h-12 translate-x-[-20%]"
                 top="0.55rem"
                 left="-6"
                 password
-                name="Repeat Password"
+                labelName="Repeat Password"
+                name="repeatPassword"
+                error={methods.formState.errors.repeatPassword}
               />
               <div className="flex gap-6 translate-x-[10%]">
                 <FormCountryComboBox
                   refValue={value}
                   refSetValue={setValue}
+                  name="country"
                   form={methods}
+                  error={methods.formState.errors.country}
                 />
                 <FormInput
                   country={value}
                   className="!w-48"
-                  name="City"
+                  labelName="City"
+                  name="city"
                   top="0.35rem"
+                  error={methods.formState.errors.city}
+                  setError={setError}
+                  clearErrors={clearErrors}
                 />
               </div>
               <Button

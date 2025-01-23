@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { ComboBoxProps } from "@/lib/types";
 
 import { useFormContext } from "react-hook-form";
 
@@ -23,17 +24,9 @@ import { useForm } from "react-hook-form";
 
 let options: Object[] = [];
 
-interface countryForm {
-  refValue: string;
-  refSetValue: (value: string) => void;
-  form: any;
-}
-
-const FormCountryComboBox = React.forwardRef<HTMLSelectElement, countryForm>(
+const FormCountryComboBox = React.forwardRef<HTMLSelectElement, ComboBoxProps>(
   (props, ref) => {
-    const { form } = props;
-
-    const { refValue, refSetValue } = props;
+    const { form, error, refValue, refSetValue, name } = props;
 
     const [open, setOpen] = useState(false);
 
@@ -72,70 +65,73 @@ const FormCountryComboBox = React.forwardRef<HTMLSelectElement, countryForm>(
     return (
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FormField
-            control={form.control}
-            name="Country"
-            render={({ field }) => (
-              <FormItem>
-                <Popover open={open} onOpenChange={setOpen}>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant="outline"
-                        role="combobox"
-                        aria-expanded={open}
-                        className={`w-[200px] justify-between ${styleChanges}`}
-                      >
-                        {field.value
-                          ? options.find(
-                              (option) => option.value === field.value,
-                            )?.label
-                          : "Select a Country"}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-[202px] p-0" side="top">
-                    <Command>
-                      <CommandInput placeholder="Search countries" />
-                      <CommandList>
-                        <CommandEmpty>No results found.</CommandEmpty>
-                        <CommandGroup>
-                          {options.map((option) => (
-                            <FormControl>
-                              <CommandItem
-                                key={option.value}
-                                value={option.value}
-                                onSelect={(currentValue) => {
-                                  field.value =
-                                    field.value === currentValue
-                                      ? ""
-                                      : currentValue;
-                                  form.setValue("Country", currentValue);
-                                  refSetValue(currentValue);
-                                  setOpen(false);
-                                }}
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    field.value === option.value
-                                      ? "opacity-100"
-                                      : "opacity-0",
-                                  )}
-                                />
-                                {option.label}
-                              </CommandItem>
-                            </FormControl>
-                          ))}
-                        </CommandGroup>
-                      </CommandList>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-              </FormItem>
-            )}
-          />
+          <div>
+            <FormField
+              control={form.control}
+              name={name}
+              render={({ field }) => (
+                <FormItem>
+                  <Popover open={open} onOpenChange={setOpen}>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={open}
+                          className={`w-[200px] justify-between ${styleChanges}`}
+                        >
+                          {field.value
+                            ? options.find(
+                                (option) => option.value === field.value,
+                              )?.label
+                            : "Select a Country"}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[202px] p-0" side="top">
+                      <Command>
+                        <CommandInput placeholder="Search countries" />
+                        <CommandList>
+                          <CommandEmpty>No results found.</CommandEmpty>
+                          <CommandGroup>
+                            {options.map((option) => (
+                              <FormControl>
+                                <CommandItem
+                                  key={option.value}
+                                  value={option.value}
+                                  onSelect={(currentValue) => {
+                                    field.value =
+                                      field.value === currentValue
+                                        ? ""
+                                        : currentValue;
+                                    form.setValue("country", currentValue);
+                                    refSetValue(currentValue);
+                                    setOpen(false);
+                                  }}
+                                >
+                                  <Check
+                                    className={cn(
+                                      "mr-2 h-4 w-4",
+                                      field.value === option.value
+                                        ? "opacity-100"
+                                        : "opacity-0",
+                                    )}
+                                  />
+                                  {option.label}
+                                </CommandItem>
+                              </FormControl>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </FormItem>
+              )}
+            />
+          </div>
+          {error && <span className="text-red-600">{error.message}</span>}
         </form>
       </Form>
     );
