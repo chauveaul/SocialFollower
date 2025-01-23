@@ -1,5 +1,5 @@
 import { z, ZodType } from "zod";
-import { RegisterFormData } from "./types";
+import { RegisterFormData, LoginFormData } from "./types";
 
 export const RegistrationSchema: ZodType<RegisterFormData> = z
   .object({
@@ -29,3 +29,11 @@ export const RegistrationSchema: ZodType<RegisterFormData> = z
       });
     }
   });
+
+export const LoginSchema: ZodType<LoginFormData> = z.object({
+  email: z
+    .string()
+    .min(1, { message: "You cannot leave this field empty" })
+    .email("This isn't a valid email"),
+  password: z.string().min(1, { message: "You cannot leave this field empty" }),
+});

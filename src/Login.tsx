@@ -4,9 +4,14 @@ import { logoMicrosoft, logoGoogle, logoGithub } from "ionicons/icons";
 import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
+import { LoginFormData } from "@/lib/types";
+import { LoginSchema } from "@/lib/form-validation";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function Login() {
-  const methods = useForm();
+  const { setError, clearErrors, ...methods } = useForm<LoginFormData>({
+    resolver: zodResolver(LoginSchema),
+  });
 
   function onSubmit(data) {
     console.log(data);
@@ -27,17 +32,21 @@ export default function Login() {
               className="flex flex-col gap-10 w-2/3 items-center"
             >
               <FormInput
-                name="Email"
+                name="email"
+                labelName="Email"
                 className="w-[32rem] h-12 translate-x-[-20%]"
                 top="0.55rem"
                 left="-6"
+                error={methods.formState.errors.email}
               />
               <FormInput
-                name="Password"
+                name="password"
+                labelName="Password"
                 className="w-[32rem] h-12 translate-x-[-20%]"
                 top="0.55rem"
                 left="-6"
                 password
+                error={methods.formState.errors.password}
               />
               <Button
                 variant={"outline"}
