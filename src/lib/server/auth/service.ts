@@ -1,5 +1,5 @@
 import { Client, Account, ID, AppwriteException } from "appwrite";
-import { RegisterFormData } from "@/lib/types";
+import { LoginFormData, RegisterFormData } from "@/lib/types";
 import App from "@/App";
 
 const client =
@@ -28,19 +28,13 @@ export default class AuthService {
     };
   }
 
-  static async loginUser(email: string, password: string) {
+  static async loginUser(formData: LoginFormData) {
+    const { email, password } = formData;
     const account = new Account(client);
 
-    const promise = account.createEmailPasswordSession(email, password);
+    const result = await account.createEmailPasswordSession(email, password);
 
-    promise.then(
-      (res) => {
-        console.log(res);
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
+    console.log(result);
   }
 
   static async isLoggedIn(): Promise<boolean> {
@@ -52,5 +46,13 @@ export default class AuthService {
     } catch (error) {
       return false;
     }
+  }
+
+  static async logoutUser() {
+    const account = new Account(client);
+
+    const result = await account.deleteSession("current");
+
+    return result;
   }
 }

@@ -2,20 +2,37 @@ import { FormInput } from "@/components/ui/prebuilts/FormInput";
 import { IonIcon } from "@ionic/react";
 import { logoMicrosoft, logoGoogle, logoGithub } from "ionicons/icons";
 import { Button } from "@/components/ui/button";
-import { Form, FormField } from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { LoginFormData } from "@/lib/types";
 import { LoginSchema } from "@/lib/form-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { loginUser, logoutUser } from "./lib/server/auth/controller";
 
 export default function Login() {
   const { setError, clearErrors, ...methods } = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
   });
 
-  function onSubmit(data) {
-    console.log(data);
+  async function onSubmit(data: LoginFormData) {
+    try {
+      const response = await loginUser(data);
+      console.log(`Login res: ${response}`);
+    } catch (error) {
+      if (error.message.includes("password")) {
+        setError("password", {
+          type: "custom",
+          message: "Password or email is invalid",
+        });
+      } else {
+        setError("password", {
+          type: "custom",
+          message: "Too many attempts, try again later",
+        });
+      }
+    }
   }
+
   return (
     <div className="flex justify-center items-center w-screen h-screen">
       <div className="flex flex-col dark:bg-neutral-800 w-screen items-center gap-14">
