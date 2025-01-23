@@ -13,10 +13,10 @@ export const RegistrationSchema: ZodType<RegisterFormData> = z
       .email("This isn't a valid email"),
     password: z
       .string()
-      .min(4, { message: "Please enter at least 4 characters" }),
+      .min(8, { message: "Please enter at least 8 characters" }),
     repeatPassword: z
       .string()
-      .min(4, { message: "Please enter at least 4 characters" }),
+      .min(8, { message: "Please enter at least 8 characters" }),
     city: z.string().min(1, { message: "Please enter a city" }),
     country: z.string({ message: "Please select a country" }),
   })

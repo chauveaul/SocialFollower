@@ -7,6 +7,7 @@ import { Form } from "@/components/ui/form";
 import { RegisterFormData } from "@/lib/types";
 import { RegistrationSchema } from "@/lib/form-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { registerUser } from "@/lib/server/auth/controller";
 
 export default function Register() {
   const { setError, clearErrors, ...methods } = useForm<RegisterFormData>({
@@ -15,8 +16,17 @@ export default function Register() {
 
   const [value, setValue] = useState("");
 
-  function onSubmit(data) {
-    console.log(data);
+  async function onSubmit(formData: RegisterFormData) {
+    try {
+      const response = await registerUser(formData);
+      console.log(response.message);
+    } catch (err) {
+      setError("email", {
+        type: "custom",
+        message: "A user with this email already exists",
+      });
+    }
+    //TODO: Redirect to dashboard
   }
 
   return (
