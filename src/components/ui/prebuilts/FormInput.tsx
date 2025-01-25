@@ -21,7 +21,7 @@ const cityIssue: ZodIssue[] = [
 const cityError = new ZodError(cityIssue);
 
 const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
-  (props, ref) => {
+  (props, userRef) => {
     const {
       labelName,
       name,
@@ -131,6 +131,14 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
       }
     }, [country, cities, inputValue]);
 
+    console.log(userRef);
+
+    const { ref, ...methods } = register(name, {
+      onChange: ({ target: { value, name } }) => {
+        setInputValue(value);
+      },
+      valueAsNumber,
+    });
     return (
       <div>
         <div className="relative w-80 h-10">
@@ -149,12 +157,11 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
             }
             autoComplete="off"
             type={password ? "password" : "text"}
-            {...register(name, {
-              onChange: ({ target: { value, name } }) => {
-                setInputValue(value);
-              },
-              valueAsNumber,
-            })}
+            {...methods}
+            ref={(e) => {
+              ref(e);
+              userRef.current = e;
+            }}
             onFocus={() => setIsInputFocused(true)}
             onBlur={() => setIsInputFocused(false)}
           />

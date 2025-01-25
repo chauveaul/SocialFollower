@@ -1,3 +1,4 @@
+import { LegacyRef, MutableRefObject } from "react";
 import {
   FieldError,
   UseFormClearErrors,
@@ -34,6 +35,7 @@ export type FormInputProps = {
   left?: string;
   password: boolean;
   country?: string;
+  userRef?: LegacyRef<HTMLInputElement>;
 };
 
 export type ComboBoxProps = {

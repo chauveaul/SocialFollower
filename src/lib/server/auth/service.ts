@@ -14,8 +14,9 @@ export default class AuthService {
     const { email, password } = formData;
     const account = new Account(client);
 
+    let response;
     try {
-      await account.create(ID.unique(), email, password);
+      response = await account.create(ID.unique(), email, password);
     } catch (error) {
       const err = error as AppwriteException;
 
@@ -25,6 +26,7 @@ export default class AuthService {
     return {
       status: 200,
       message: "The account has been successfully created.",
+      data: response,
     };
   }
 
@@ -33,6 +35,14 @@ export default class AuthService {
     const account = new Account(client);
 
     const result = await account.createEmailPasswordSession(email, password);
+
+    console.log(result);
+  }
+
+  static async loginUserID(userID: string, secret: string) {
+    const account = new Account(client);
+
+    const result = await account.createSession(userID, secret);
 
     console.log(result);
   }

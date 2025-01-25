@@ -9,6 +9,10 @@ export async function loginUser(formData: LoginFormData) {
   return AuthService.loginUser(formData);
 }
 
+export async function loginUserID(userID: string, secret: string) {
+  return AuthService.loginUserID(userID, secret);
+}
+
 export async function logoutUser() {
   return AuthService.logoutUser();
 }

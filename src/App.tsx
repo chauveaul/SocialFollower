@@ -5,15 +5,25 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   RouterProvider,
+  Navigate,
 } from "react-router-dom";
 import Login from "@/Login";
 import Register from "@/Register";
+import Dashboard from "@/Dashboard";
+import { isLoggedIn } from "./lib/server/auth/controller";
+
+const userLoggedIn = await isLoggedIn();
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={userLoggedIn ? <Dashboard /> : <Login />} />
       <Route path="/register" element={<Register />} />
+      <Route
+        path="/dashboard"
+        element={userLoggedIn ? <Dashboard /> : <Navigate to="/login" />}
+      />
+      <Route path="/dashboard" element={<Dashboard />} />
     </Route>,
   ),
 );
