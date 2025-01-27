@@ -1,4 +1,4 @@
-import { LegacyRef, useRef, useState } from "react";
+import { LegacyRef, useRef, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FormInput } from "@/components/ui/prebuilts/FormInput";
 import { FormCountryComboBox } from "@/components/ui/prebuilts/FormCountryComboBox";
@@ -16,20 +16,17 @@ export default function Register() {
 
   const [value, setValue] = useState("");
 
-  let emailRef: LegacyRef<HTMLInputElement>;
-  let passwordRef: LegacyRef<HTMLInputElement>;
+  let emailRef: LegacyRef<HTMLInputElement> = useRef(null);
+  let passwordRef: LegacyRef<HTMLInputElement> = useRef(null);
 
   async function onSubmit(formData: RegisterFormData) {
     try {
       const response = await registerUser(formData).then(() => {
-        console.log(emailRef.current);
-        console.log(passwordRef.current);
         loginUser({
           email: emailRef.current?.value,
           password: passwordRef.current?.value,
         } as LoginFormData);
       });
-      console.log(response.message);
     } catch (err) {
       setError("email", {
         type: "custom",
@@ -38,9 +35,9 @@ export default function Register() {
     }
 
     //TODO: Fix redirect when I have a url for the site
-    //    process.env.NODE_ENV === "development"
-    //      ? (window.location.href = "http://localhost:5173/dashboard")
-    //      : (window.location.href = "");
+    process.env.NODE_ENV === "development"
+      ? (window.location.href = "http://localhost:5173/dashboard")
+      : (window.location.href = "");
   }
 
   return (
@@ -83,12 +80,7 @@ export default function Register() {
                 labelName="Email"
                 name="email"
                 error={methods.formState.errors.email}
-                ref={(ref) => {
-                  emailRef = useRef(ref);
-                }}
-                userRef={useEffect(() => {
-                  emailRef;
-                }, [])}
+                ref={emailRef}
               />
               <FormInput
                 className="w-[32rem] h-12 translate-x-[-20%]"
@@ -98,7 +90,7 @@ export default function Register() {
                 labelName="Password"
                 name="password"
                 error={methods.formState.errors.password}
-                userRef={passwordRef}
+                ref={passwordRef}
               />
               <FormInput
                 className="w-[32rem] h-12 translate-x-[-20%]"

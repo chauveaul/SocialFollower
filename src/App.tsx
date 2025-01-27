@@ -30,7 +30,6 @@ const router = createBrowserRouter(
 
 export default function App({ routes }) {
   const client = new Client();
-  console.log(process.env.NODE_ENV);
   if (process.env.NODE_ENV === "development") {
     client
       .setEndpoint("http://localhost/v1")

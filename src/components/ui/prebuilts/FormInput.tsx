@@ -110,8 +110,6 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
     useEffect(() => {
       if (!isCityInCities && inputValue && name === "city") {
         cityError.issues.forEach((issue) => {
-          console.log(name);
-          console.log(setError);
           setError("city", {
             type: "custom",
             message: issue.message,
@@ -130,8 +128,6 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
         setIsCityInCities(isInputInCities(cities, inputValue));
       }
     }, [country, cities, inputValue]);
-
-    console.log(userRef);
 
     const { ref, ...methods } = register(name, {
       onChange: ({ target: { value, name } }) => {
@@ -160,7 +156,9 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
             {...methods}
             ref={(e) => {
               ref(e);
-              userRef.current = e;
+              if (userRef) {
+                userRef.current = e;
+              }
             }}
             onFocus={() => setIsInputFocused(true)}
             onBlur={() => setIsInputFocused(false)}
@@ -188,11 +186,9 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
 function isInputInCities(cities: Object[], inputValue: string): boolean {
   for (const city of cities) {
     if (inputValue.toLowerCase() === city.value) {
-      console.log("True");
       return true;
     }
   }
-  console.log("False");
   return false;
 }
 
