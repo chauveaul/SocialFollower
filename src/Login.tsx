@@ -17,7 +17,9 @@ export default function Login() {
   async function onSubmit(data: LoginFormData) {
     try {
       const response = await loginUser(data);
-      console.log(`Login res: ${response}`);
+      process.env.NODE_ENV === "development"
+        ? (window.location.href = "http://localhost:5173/dashboard")
+        : (window.location.href = "");
     } catch (error) {
       if (error.message.includes("password")) {
         setError("password", {

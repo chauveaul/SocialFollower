@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { LegacyRef, useRef, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FormInput } from "@/components/ui/prebuilts/FormInput";
 import { FormCountryComboBox } from "@/components/ui/prebuilts/FormCountryComboBox";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { RegisterFormData } from "@/lib/types";
+import { LoginFormData, RegisterFormData } from "@/lib/types";
 import { RegistrationSchema } from "@/lib/form-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerUser } from "@/lib/server/auth/controller";
+import { loginUser, registerUser } from "@/lib/server/auth/controller";
 
 export default function Register() {
   const { setError, clearErrors, ...methods } = useForm<RegisterFormData>({
@@ -16,17 +16,28 @@ export default function Register() {
 
   const [value, setValue] = useState("");
 
+  let emailRef: LegacyRef<HTMLInputElement> = useRef(null);
+  let passwordRef: LegacyRef<HTMLInputElement> = useRef(null);
+
   async function onSubmit(formData: RegisterFormData) {
     try {
-      const response = await registerUser(formData);
-      console.log(response.message);
+      const response = await registerUser(formData).then(() => {
+        loginUser({
+          email: emailRef.current?.value,
+          password: passwordRef.current?.value,
+        } as LoginFormData);
+      });
     } catch (err) {
       setError("email", {
         type: "custom",
         message: "A user with this email already exists",
       });
     }
-    //TODO: Redirect to dashboard
+
+    //TODO: Fix redirect when I have a url for the site
+    process.env.NODE_ENV === "development"
+      ? (window.location.href = "http://localhost:5173/dashboard")
+      : (window.location.href = "");
   }
 
   return (
@@ -69,6 +80,7 @@ export default function Register() {
                 labelName="Email"
                 name="email"
                 error={methods.formState.errors.email}
+                ref={emailRef}
               />
               <FormInput
                 className="w-[32rem] h-12 translate-x-[-20%]"
@@ -78,6 +90,7 @@ export default function Register() {
                 labelName="Password"
                 name="password"
                 error={methods.formState.errors.password}
+                ref={passwordRef}
               />
               <FormInput
                 className="w-[32rem] h-12 translate-x-[-20%]"

@@ -53,8 +53,6 @@ export default function FormCitiesComboBox({ country }: ComboBoxProps) {
       });
   }, [country]);
 
-  console.log(options);
-
   useMemo(() => {
     open ? setStyleChanges("border-b-0 rounded-b-none") : setStyleChanges("");
   }, [open]);

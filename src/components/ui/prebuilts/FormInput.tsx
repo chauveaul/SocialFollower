@@ -21,7 +21,7 @@ const cityIssue: ZodIssue[] = [
 const cityError = new ZodError(cityIssue);
 
 const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
-  (props, ref) => {
+  (props, userRef) => {
     const {
       labelName,
       name,
@@ -110,8 +110,6 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
     useEffect(() => {
       if (!isCityInCities && inputValue && name === "city") {
         cityError.issues.forEach((issue) => {
-          console.log(name);
-          console.log(setError);
           setError("city", {
             type: "custom",
             message: issue.message,
@@ -131,6 +129,12 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
       }
     }, [country, cities, inputValue]);
 
+    const { ref, ...methods } = register(name, {
+      onChange: ({ target: { value, name } }) => {
+        setInputValue(value);
+      },
+      valueAsNumber,
+    });
     return (
       <div>
         <div className="relative w-80 h-10">
@@ -149,12 +153,13 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
             }
             autoComplete="off"
             type={password ? "password" : "text"}
-            {...register(name, {
-              onChange: ({ target: { value, name } }) => {
-                setInputValue(value);
-              },
-              valueAsNumber,
-            })}
+            {...methods}
+            ref={(e) => {
+              ref(e);
+              if (userRef) {
+                userRef.current = e;
+              }
+            }}
             onFocus={() => setIsInputFocused(true)}
             onBlur={() => setIsInputFocused(false)}
           />
@@ -181,11 +186,9 @@ const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
 function isInputInCities(cities: Object[], inputValue: string): boolean {
   for (const city of cities) {
     if (inputValue.toLowerCase() === city.value) {
-      console.log("True");
       return true;
     }
   }
-  console.log("False");
   return false;
 }
 
