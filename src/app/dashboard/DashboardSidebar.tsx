@@ -9,10 +9,7 @@ export default function DashboardSidebar({
   return (
     <SidebarProvider>
       <SidebarTemplate />
-      <main>
-        <SidebarTrigger />
-        {children}
-      </main>
+      <main>{children}</main>
     </SidebarProvider>
   );
 }
