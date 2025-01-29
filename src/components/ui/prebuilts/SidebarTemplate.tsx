@@ -1,3 +1,4 @@
+import { ChartIcon, UserIcon, SettingsIcon } from "@/assets/Icons";
 import {
   Sidebar,
   SidebarContent,
@@ -9,11 +10,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {
-  PieChartOutline,
-  PersonCircleOutline,
-  SettingsOutline,
-} from "react-ionicons";
 
 export function SidebarTemplate() {
   return (
@@ -28,32 +24,17 @@ export function SidebarTemplate() {
             <SidebarMenu>
               <SidebarMenuItem key="charts">
                 <SidebarMenuButton size="lg">
-                  <PieChartOutline
-                    color={"#ffffff"}
-                    title="chart"
-                    height="40px"
-                    width="40px"
-                  />
+                  <ChartIcon />
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem key="profile">
                 <SidebarMenuButton size="lg">
-                  <PersonCircleOutline
-                    color={"#ffffff"}
-                    title="profile"
-                    height="40px"
-                    width="40px"
-                  />
+                  <UserIcon />
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem key="settings">
                 <SidebarMenuButton size="lg">
-                  <SettingsOutline
-                    color={"#ffffff"}
-                    title="settings"
-                    height="40px"
-                    width="40px"
-                  />
+                  <SettingsIcon />
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
