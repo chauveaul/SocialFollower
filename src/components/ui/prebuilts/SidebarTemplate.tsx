@@ -22,51 +22,44 @@ export function SidebarTemplate() {
         <span>Logo</span>
       </SidebarHeader>
       <SidebarContent>
+        <SidebarGroup />
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem key="charts">
-                <SidebarMenuButton asChild>
-                  <a href="#">
-                    <PieChartOutline
-                      color={"#ffffff"}
-                      title="chart"
-                      height="25px"
-                      width="25px"
-                    />
-                    <span>Charts</span>
-                  </a>
+                <SidebarMenuButton size="lg">
+                  <PieChartOutline
+                    color={"#ffffff"}
+                    title="chart"
+                    height="40px"
+                    width="40px"
+                  />
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem key="profile">
-                <SidebarMenuButton asChild>
-                  <a href="#">
-                    <PersonCircleOutline
-                      color={"#ffffff"}
-                      title="profile"
-                      height="25px"
-                      width="25px"
-                    />
-                    <span>Profile</span>
-                  </a>
+                <SidebarMenuButton size="lg">
+                  <PersonCircleOutline
+                    color={"#ffffff"}
+                    title="profile"
+                    height="40px"
+                    width="40px"
+                  />
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem key="settings">
-                <SidebarMenuButton asChild>
-                  <a href="#">
-                    <SettingsOutline
-                      color={"#ffffff"}
-                      title="settings"
-                      height="25px"
-                      width="25px"
-                    />
-                    <span>Settings</span>
-                  </a>
+                <SidebarMenuButton size="lg">
+                  <SettingsOutline
+                    color={"#ffffff"}
+                    title="settings"
+                    height="40px"
+                    width="40px"
+                  />
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        <SidebarGroup />
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>
