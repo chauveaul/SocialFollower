@@ -1,9 +1,9 @@
-import { isLoggedIn, logoutUser } from "@/lib/server/auth/controller";
+import DashboardSidebar from "./DashboardSidebar";
 
 export default function Dashboard() {
   return (
     <div>
-      <span>Test</span>
+      <DashboardSidebar children={<span>Test</span>} />
     </div>
   );
 }
