@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import FormInput from "@/components/ui/prebuilts/FormInput";
+import { FormInput } from "@/components/ui/prebuilts/FormInput";
 
 const meta: Meta<typeof FormInput> = {
   component: FormInput,
@@ -21,6 +21,7 @@ export const Primary: Story = {
   args: {
     primary: true,
     label: "Input",
-    name: "Email",
+    name: "email",
+    labelName: "Email",
   },
 };

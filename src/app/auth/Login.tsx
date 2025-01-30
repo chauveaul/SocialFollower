@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { LoginFormData } from "@/lib/types";
 import { LoginSchema } from "@/lib/form-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginUser, logoutUser } from "./lib/server/auth/controller";
+import { loginUser, logoutUser } from "@/lib/server/auth/controller";
 
 export default function Login() {
   const { setError, clearErrors, ...methods } = useForm<LoginFormData>({

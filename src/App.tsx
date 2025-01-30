@@ -7,10 +7,10 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import Login from "@/Login";
-import Register from "@/Register";
-import Dashboard from "@/Dashboard";
-import { isLoggedIn } from "./lib/server/auth/controller";
+import Login from "@/app/auth/Login";
+import Register from "@/app/auth/Register";
+import Dashboard from "@/app/dashboard/Dashboard";
+import { isLoggedIn } from "@/lib/server/auth/controller";
 
 const userLoggedIn = await isLoggedIn();
 

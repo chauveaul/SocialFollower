@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import FormCountryComboBox from "@/components/ui/prebuilts/FormCountryComboBox";
+import { FormCountryComboBox } from "@/components/ui/prebuilts/FormCountryComboBox";
 
 const meta: Meta<typeof FormCountryComboBox> = {
   component: FormCountryComboBox,
