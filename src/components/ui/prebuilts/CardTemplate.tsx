@@ -10,7 +10,7 @@ import { ReactNode } from "react";
 
 type CardTemplateProps = {
   className?: string;
-  cardTitle?: string;
+  cardTitle?: ReactNode | string;
   cardDescription?: string;
   cardContent: ReactNode | string;
   cardFooter?: ReactNode;
@@ -41,8 +41,11 @@ export function CardTemplate({
         className,
       )}
     >
+      {/* NOTE: Subject to change */}
       <CardHeader>
-        {cardTitle ? <CardTitle>{cardTitle}</CardTitle> : null}
+        {cardTitle ? (
+          <CardTitle className="text-white/[0.8]">{cardTitle}</CardTitle>
+        ) : null}
         {cardDescription ? (
           <CardDescription>{cardDescription}</CardDescription>
         ) : null}
