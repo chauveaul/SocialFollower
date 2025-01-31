@@ -3,7 +3,7 @@ import { CardTemplate } from "@/components/ui/prebuilts/CardTemplate";
 import { LineChartTemplate } from "@/components/ui/prebuilts/LineChartTemplate";
 
 export function LinkedInDashboard() {
-  const chartData = [
+  const impressionsChartData = [
     { month: "January", impressions: 100 },
     { month: "February", impressions: 184 },
     { month: "March", impressions: 263 },
@@ -11,6 +11,16 @@ export function LinkedInDashboard() {
     { month: "May", impressions: 367 },
     { month: "June", impressions: 95 },
     { month: "July", impressions: 154 },
+  ];
+
+  const followerChartData = [
+    { month: "January", followers: 84 },
+    { month: "February", followers: 145 },
+    { month: "March", followers: 263 },
+    { month: "April", followers: 300 },
+    { month: "May", followers: 367 },
+    { month: "June", followers: 345 },
+    { month: "July", followers: 467 },
   ];
   return (
     <div className="m-4 flex flex-col gap-8">
@@ -28,14 +38,25 @@ export function LinkedInDashboard() {
             cardTitle={<h1 className="font-normal text-4xl">Impressions</h1>}
             cardContent={
               <LineChartTemplate
-                chartData={chartData}
+                chartData={impressionsChartData}
                 xDataKey="month"
                 yDataKey="impressions"
                 className="h-52 w-full"
               />
             }
           />
-          <CardTemplate className="w-full m-2" cardContent={<p>Test</p>} />
+          <CardTemplate
+            className="w-full m-2"
+            cardTitle={<h1 className="font-normal text-4xl">Followers</h1>}
+            cardContent={
+              <LineChartTemplate
+                chartData={followerChartData}
+                xDataKey="month"
+                yDataKey="followers"
+                className="h-52 w-full"
+              />
+            }
+          />
         </div>
         {/* NOTE: This is the div for the bottom layer of the cards */}
         <div className="flex justify-between gap-2">

@@ -18,7 +18,10 @@ type LineChartProps = {
 const chartConfig = {
   impressions: {
     label: "Impressions",
-    //color: "linear-gradient(to right, #, #)",
+    color: "hsl(var(--chart-1))",
+  },
+  followers: {
+    label: "Followers",
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
