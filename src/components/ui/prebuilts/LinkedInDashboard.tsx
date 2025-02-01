@@ -23,12 +23,15 @@ export function LinkedInDashboard() {
     { month: "July", followers: 467 },
   ];
   return (
-    <div className="m-4 flex flex-col gap-8 w-full">
+    <div className="m-4 mt-16 flex flex-col gap-8 w-full">
       {/*NOTE:  ^^^^ This will be the overall container that will define the size of the section */}
       {/* Important for the correct sizing to see the next tab appear at the bottom of the screen */}
-      <div className="flex text-white/[0.8] gap-4 items-center">
-        <LinkedinIcon />
-        <h1 className="text-7xl">LinkedIn</h1>
+      <div className="flex justify-between">
+        <div className="flex text-white/[0.8] gap-4 items-center">
+          <LinkedinIcon />
+          <h1 className="text-7xl">LinkedIn</h1>
+        </div>
+        {/* TODO: Combobox for timeframe of charts, ex. (last week, last month, etc.) */}
       </div>
       <div className="flex flex-col gap-4 w-full">
         {/* NOTE: This is the div for the top layer of the cards */}
@@ -89,9 +92,58 @@ export function LinkedInDashboard() {
         </div>
         {/* NOTE: This is the div for the bottom layer of the cards */}
         <div className="flex justify-between gap-2">
-          <CardTemplate className="w-full m-2 h-52" cardContent={<p>Test</p>} />
-          <CardTemplate className="w-full m-2" cardContent={<p>Test</p>} />
-          <CardTemplate className="w-full m-2" cardContent={<p>Test</p>} />
+          <CardTemplate
+            className="w-full m-2 h-44 flex flex-col justify-center"
+            cardContent={
+              <div className="flex justify-between items-center">
+                <h1 className="text-5xl">Likes</h1>
+                <div className="flex gap-2 items-center">
+                  <TriangleIcon
+                    width={36}
+                    height={36}
+                    fill="#28C840"
+                    stroke="#28C840"
+                  />
+                  <span className="text-4xl">+13.5%</span>
+                </div>
+              </div>
+            }
+          />
+          <CardTemplate
+            className="w-full m-2 flex flex-col justify-center"
+            cardContent={
+              <div className="flex justify-between items-center">
+                <h1 className="text-5xl">Reach</h1>
+                <div className="flex gap-2 items-center">
+                  <TriangleIcon
+                    width={36}
+                    height={36}
+                    fill="#28C840"
+                    stroke="#28C840"
+                  />
+                  <span className="text-4xl">+4.7%</span>
+                </div>
+              </div>
+            }
+          />
+          <CardTemplate
+            className="w-full m-2 flex flex-col justify-center"
+            cardContent={
+              <div className="flex justify-between items-center">
+                <h1 className="text-4xl">Engagement</h1>
+                <div className="flex gap-2 items-center">
+                  <TriangleIcon
+                    width={36}
+                    height={36}
+                    className="rotate-180"
+                    stroke="#FE5F57"
+                    fill="#FE5F57"
+                  />
+                  <span className="text-4xl">-21.8%</span>
+                </div>
+              </div>
+            }
+          />
         </div>
       </div>
     </div>

@@ -42,14 +42,16 @@ export function CardTemplate({
       )}
     >
       {/* NOTE: Subject to change */}
-      <CardHeader>
-        {cardTitle ? (
-          <CardTitle className="text-white/[0.8]">{cardTitle}</CardTitle>
-        ) : null}
-        {cardDescription ? (
-          <CardDescription>{cardDescription}</CardDescription>
-        ) : null}
-      </CardHeader>
+      {cardTitle || cardDescription ? (
+        <CardHeader>
+          {cardTitle ? (
+            <CardTitle className="text-white/[0.8]">{cardTitle}</CardTitle>
+          ) : null}
+          {cardDescription ? (
+            <CardDescription>{cardDescription}</CardDescription>
+          ) : null}
+        </CardHeader>
+      ) : null}
       <CardContent>{cardContent}</CardContent>
       {cardFooter ? <CardFooter>{cardFooter}</CardFooter> : null}
     </Card>
