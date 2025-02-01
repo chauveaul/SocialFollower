@@ -1,4 +1,4 @@
-import { LinkedinIcon } from "@/assets/Icons";
+import { LinkedinIcon, TriangleIcon } from "@/assets/Icons";
 import { CardTemplate } from "@/components/ui/prebuilts/CardTemplate";
 import { LineChartTemplate } from "@/components/ui/prebuilts/LineChartTemplate";
 
@@ -35,7 +35,20 @@ export function LinkedInDashboard() {
         <div className="flex justify-between gap-2">
           <CardTemplate
             className="w-[45rem] max-w-[43vw] m-2 justify-center items-center"
-            cardTitle={<h1 className="font-normal text-4xl">Impressions</h1>}
+            cardTitle={
+              <div className="flex justify-between">
+                <h1 className="font-normal text-4xl">Impressions</h1>
+                <div className="flex items-center justify-center gap-2">
+                  <TriangleIcon
+                    width={36}
+                    height={36}
+                    stroke="#28C840"
+                    fill="#28C840"
+                  />
+                  <span className="text-3xl">+43.5%</span>
+                </div>
+              </div>
+            }
             cardContent={
               <LineChartTemplate
                 chartData={impressionsChartData}
@@ -47,7 +60,23 @@ export function LinkedInDashboard() {
           />
           <CardTemplate
             className="w-[45rem] max-w-[43vw] m-2"
-            cardTitle={<h1 className="font-normal text-4xl">Followers</h1>}
+            cardTitle={
+              <div className="flex justify-between">
+                <h1 className="font-normal text-4xl">Followers</h1>
+                <div className="flex items-center justify-center gap-2">
+                  <TriangleIcon
+                    width={36}
+                    height={36}
+                    stroke="#FE5F57"
+                    fill="#FE5F57"
+                    className="rotate-180"
+                  />
+                  {/*NOTE: for the positive and negative indications, check for */}
+                  {/*the sign in front of the number */}
+                  <span className="text-3xl">-13.2%</span>
+                </div>
+              </div>
+            }
             cardContent={
               <LineChartTemplate
                 chartData={followerChartData}
