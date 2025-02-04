@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { LoginFormData } from "@/lib/types";
 import { LoginSchema } from "@/lib/form-validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginUser, logoutUser } from "@/lib/server/auth/controller";
+import { loginUser } from "@/lib/server/auth/controller";
 
 export default function Login() {
   const { setError, clearErrors, ...methods } = useForm<LoginFormData>({
@@ -16,12 +16,12 @@ export default function Login() {
 
   async function onSubmit(data: LoginFormData) {
     try {
-      const response = await loginUser(data);
+      await loginUser(data);
       process.env.NODE_ENV === "development"
         ? (window.location.href = "http://localhost:5173/dashboard")
         : (window.location.href = "");
     } catch (error) {
-      if (error.message.includes("password")) {
+      if (error instanceof Error && error.message.includes("password")) {
         setError("password", {
           type: "custom",
           message: "Password or email is invalid",
@@ -45,7 +45,7 @@ export default function Login() {
           </span>
         </h1>
         <div className="flex flex-col gap-10 w-2/3 items-center">
-          <Form {...methods}>
+          <Form {...methods} setError={setError} clearErrors={clearErrors}>
             <form
               onSubmit={methods.handleSubmit(onSubmit)}
               className="flex flex-col gap-10 w-2/3 items-center"

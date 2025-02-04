@@ -33,8 +33,8 @@ export const RegistrationSchema: ZodType<RegisterFormData> = z
 export const LoginSchema: ZodType<LoginFormData> = z.object({
   email: z
     .string()
-    .min(1, { message: "You cannot leave this field empty" })
-    .email("This isn't a valid email"),
+    .email("This isn't a valid email")
+    .min(1, { message: "You cannot leave this field empty" }),
   password: z
     .string()
     .min(8, { message: "The password needs to be at least 8 characters long" }),

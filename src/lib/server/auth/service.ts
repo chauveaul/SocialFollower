@@ -1,6 +1,5 @@
 import { Client, Account, ID, AppwriteException } from "appwrite";
 import { LoginFormData, RegisterFormData } from "@/lib/types";
-import App from "@/App";
 
 const client =
   process.env.NODE_ENV === "development"

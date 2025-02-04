@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -16,10 +16,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ComboBoxProps } from "@/lib/types";
 
-type ComboBoxProps = { country: string };
-
-let options: Object[] = [];
+let options: { value: string; label: string }[] = [];
 
 export default function FormCitiesComboBox({ country }: ComboBoxProps) {
   const [open, setOpen] = useState(false);
