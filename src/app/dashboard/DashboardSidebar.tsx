@@ -1,5 +1,5 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { SidebarTemplate } from "@/components/ui/prebuilts/SidebarTemplate";
+import { SidebarTemplate } from "@/components/ui/prebuilts/Dashboard/SidebarTemplate";
 
 export default function DashboardSidebar({
   children,

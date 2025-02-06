@@ -26,7 +26,7 @@ export type FormInputProps = {
   name: ValidFieldNames;
   labelName: string;
   register?: UseFormRegister<FormData>;
-  error: FieldError | undefined;
+  error?: FieldError | undefined;
   setError?: UseFormSetError<RegisterFormData>;
   clearErrors?: UseFormClearErrors<RegisterFormData>;
   valueAsNumber?: boolean;
@@ -35,6 +35,19 @@ export type FormInputProps = {
   left?: string;
   password?: boolean;
   country?: string;
+  userRef?: LegacyRef<HTMLInputElement>;
+  primary?: boolean;
+};
+
+export type GenericInputProps = {
+  type?: string;
+  placeholder: string;
+  name: ValidFieldNames;
+  valueAsNumber?: boolean;
+  className?: string;
+  top?: string;
+  left?: string;
+  password?: boolean;
   userRef?: LegacyRef<HTMLInputElement>;
   primary?: boolean;
 };

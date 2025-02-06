@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { LinkedInDashboard } from "@/components/ui/prebuilts/Dashboard/LinkedInDashboard";
+import Settings from "@/components/ui/prebuilts/Dashboard/Settings";
 
-const meta: Meta<typeof LinkedInDashboard> = {
-  component: LinkedInDashboard,
+const meta: Meta<typeof Settings> = {
+  component: Settings,
   parameters: {
     backgrounds: {
       default: "dark",
@@ -11,7 +11,7 @@ const meta: Meta<typeof LinkedInDashboard> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof LinkedInDashboard>;
+type Story = StoryObj<typeof Settings>;
 
 export const Primary: Story = {
   args: {
