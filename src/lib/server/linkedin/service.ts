@@ -22,7 +22,10 @@ export default class LinkedInService {
             "LinkedInAuth",
             accountId,
             { accountToken: res.responseBody },
-            [Permission.write(Role.any())],
+            [
+              Permission.create(Role.user(accountId)),
+              Permission.write(Role.any()),
+            ],
           );
           window.location.href = "https://socialfollower.xyz/Dashboard";
         }
