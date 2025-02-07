@@ -12,8 +12,6 @@ import {
   YouTubeIcon,
 } from "@/assets/Icons";
 import { logoutUser } from "@/lib/server/auth/controller";
-import { LoginUser } from "@/lib/server/linkedin/controller";
-import { useEffect } from "react";
 
 export default function Settings() {
   function handleLinkedInClick() {
