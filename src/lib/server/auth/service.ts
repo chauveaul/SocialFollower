@@ -7,7 +7,7 @@ const client =
         .setEndpoint("http://localhost/v1")
         .setProject("673e5e130010788ad4c9")
     : new Client()
-        .setEndpoint("https://appwrite.io/v1")
+        .setEndpoint("https://cloud.appwrite.io/v1")
         .setProject("671d9734ace647d7440b");
 
 export default class AuthService {
