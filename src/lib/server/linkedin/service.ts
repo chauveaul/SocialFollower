@@ -11,6 +11,8 @@ export default class LinkedInService {
     promise.then(
       (res) => {
         if (res.status === "completed") {
+          //Add appwrite database
+          window.location.href = "https://socialfollower.xyz/Dashboard";
         }
         console.log(res);
       },
