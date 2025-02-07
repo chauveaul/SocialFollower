@@ -1,3 +1,10 @@
 {
-    "projectId": "671d9734ace647d7440b"
+    "projectId": "671d9734ace647d7440b",
+    "functions": [
+        {
+            "execute": [
+                "any"
+            ]
+        }
+    ]
 }
