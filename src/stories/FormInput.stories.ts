@@ -20,7 +20,6 @@ type Story = StoryObj<typeof FormInput>;
 export const Primary: Story = {
   args: {
     primary: true,
-    label: "Input",
     name: "email",
     labelName: "Email",
   },

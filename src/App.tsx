@@ -11,24 +11,9 @@ import Login from "@/app/auth/Login";
 import Register from "@/app/auth/Register";
 import Dashboard from "@/app/dashboard/Dashboard";
 import { isLoggedIn } from "@/lib/server/auth/controller";
+import { useEffect, useState } from "react";
 
-const userLoggedIn = await isLoggedIn();
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/">
-      <Route path="/login" element={userLoggedIn ? <Dashboard /> : <Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route
-        path="/dashboard"
-        element={userLoggedIn ? <Dashboard /> : <Navigate to="/login" />}
-      />
-      <Route path="/dashboard" element={<Dashboard />} />
-    </Route>,
-  ),
-);
-
-export default function App({ routes }) {
+export default function App() {
   const client = new Client();
   if (process.env.NODE_ENV === "development") {
     client
@@ -37,9 +22,42 @@ export default function App({ routes }) {
   } else {
     client.setProject("671d9734ace647d7440b");
   }
+
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log("Func");
+      setIsUserLoggedIn(await isLoggedIn());
+    };
+
+    fetchData();
+  }, [isUserLoggedIn]);
+
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <RouterProvider router={router} />
+      <RouterProvider
+        router={createBrowserRouter(
+          createRoutesFromElements(
+            <Route path="/">
+              <Route
+                path="/login"
+                element={
+                  isUserLoggedIn ? <Navigate to="/dashboard" /> : <Login />
+                }
+              />
+              <Route path="/register" element={<Register />} />
+              <Route
+                path="/dashboard"
+                element={
+                  isUserLoggedIn ? <Dashboard /> : <Navigate to="/login" />
+                }
+              />
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>,
+          ),
+        )}
+      />
     </ThemeProvider>
   );
 }

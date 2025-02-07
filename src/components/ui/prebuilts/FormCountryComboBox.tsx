@@ -1,8 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { ComboBoxProps } from "@/lib/types";
 
-import { useFormContext } from "react-hook-form";
-
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -20,28 +18,29 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { FormControl, FormItem, FormField, Form } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
 
-let options: Object[] = [];
+let options: { value: string; label: string }[] = [];
 
 const FormCountryComboBox = React.forwardRef<HTMLSelectElement, ComboBoxProps>(
-  (props, ref) => {
-    const { form, error, refValue, refSetValue, name } = props;
+  (props) => {
+    const { form, error, refSetValue, name } = props;
 
     const [open, setOpen] = useState(false);
 
     const [styleChanges, setStyleChanges] = useState("");
 
+    const fetchBody = {
+      method: "POST",
+      body: JSON.stringify({
+        order: "asc",
+        orderBy: "name",
+      }),
+    };
+
     useMemo(() => {
       fetch(
         "https://countriesnow.space/api/v0.1/countries/info?returns=country/filter",
-        {
-          method: "POST",
-          body: {
-            order: "asc",
-            orderBy: "name",
-          },
-        },
+        fetchBody,
       )
         .then((res) => res.json())
         .then((res) => res.data)
@@ -60,7 +59,7 @@ const FormCountryComboBox = React.forwardRef<HTMLSelectElement, ComboBoxProps>(
       open ? setStyleChanges("border-t-0 rounded-t-none") : setStyleChanges("");
     }, [open]);
 
-    function onSubmit(data) {}
+    function onSubmit() { }
 
     return (
       <Form {...form}>
@@ -82,8 +81,8 @@ const FormCountryComboBox = React.forwardRef<HTMLSelectElement, ComboBoxProps>(
                         >
                           {field.value
                             ? options.find(
-                                (option) => option.value === field.value,
-                              )?.label
+                              (option) => option.value === field.value,
+                            )?.label
                             : "Select a Country"}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>

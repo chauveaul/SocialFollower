@@ -1,4 +1,4 @@
-import { LegacyRef, MutableRefObject } from "react";
+import { LegacyRef } from "react";
 import {
   FieldError,
   UseFormClearErrors,
@@ -21,21 +21,35 @@ export type LoginFormData = {
 };
 
 export type FormInputProps = {
-  type: string;
+  type?: string;
   placeholder?: string;
   name: ValidFieldNames;
   labelName: string;
-  register: UseFormRegister<FormData>;
-  error: FieldError | undefined;
-  setError: UseFormSetError<RegisterFormData>;
-  clearErrors: UseFormClearErrors<RegisterFormData>;
+  register?: UseFormRegister<FormData>;
+  error?: FieldError | undefined;
+  setError?: UseFormSetError<RegisterFormData>;
+  clearErrors?: UseFormClearErrors<RegisterFormData>;
   valueAsNumber?: boolean;
   className?: string;
   top?: string;
   left?: string;
-  password: boolean;
+  password?: boolean;
   country?: string;
   userRef?: LegacyRef<HTMLInputElement>;
+  primary?: boolean;
+};
+
+export type GenericInputProps = {
+  type?: string;
+  placeholder: string;
+  name: ValidFieldNames;
+  valueAsNumber?: boolean;
+  className?: string;
+  top?: string;
+  left?: string;
+  password?: boolean;
+  userRef?: LegacyRef<HTMLInputElement>;
+  primary?: boolean;
 };
 
 export type ComboBoxProps = {
@@ -44,6 +58,9 @@ export type ComboBoxProps = {
   form: any;
   error: FieldError | undefined;
   name: ValidFieldNames;
+  primary?: boolean;
+  country?: string;
+  label?: string;
 };
 
 export type ValidFieldNames =

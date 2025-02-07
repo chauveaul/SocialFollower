@@ -36,7 +36,7 @@ export function SidebarTemplate() {
                   }
                 >
                   <ChartIcon
-                    color={focused === "charts" ? "#1D1D1D" : "#363636"}
+                    color={focused === "charts" ? "#171717" : "#363636"}
                   />
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -51,7 +51,7 @@ export function SidebarTemplate() {
                   }
                 >
                   <UserIcon
-                    color={focused === "profile" ? "#1D1D1D" : "#363636"}
+                    color={focused === "profile" ? "#171717" : "#363636"}
                   />
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -66,7 +66,7 @@ export function SidebarTemplate() {
                   }
                 >
                   <SettingsIcon
-                    color={focused === "settings" ? "#1D1D1D" : "#363636"}
+                    color={focused === "settings" ? "#171717" : "#363636"}
                   />
                 </SidebarMenuButton>
               </SidebarMenuItem>
