@@ -21,7 +21,7 @@ export default function Settings() {
     const callbackURL =
       import.meta.env.DEV === true
         ? "http://localhost:5173/dashboard/signin-linkedin"
-        : "https://warm-toffee-6c2cee.netlify.app";
+        : "https://socialfollower.xyz/dashboard";
     const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
       callbackURL,
     )}&scope=r_liteprofile%20r_emailaddress`;
