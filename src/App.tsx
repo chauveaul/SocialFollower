@@ -1,5 +1,4 @@
 import { ThemeProvider } from "@/components/ui/theme-provider";
-import { Client } from "appwrite";
 import {
   Route,
   createBrowserRouter,
@@ -10,21 +9,11 @@ import {
 import Login from "@/app/auth/Login";
 import Register from "@/app/auth/Register";
 import Dashboard from "@/app/dashboard/Dashboard";
+import LinkedInAuthHandler from "@/components/ui/prebuilts/Auth/LinkedInAuthHandler";
 import { isLoggedIn } from "@/lib/server/auth/controller";
 import { useEffect, useState } from "react";
 
 export default function App() {
-  const client = new Client();
-  if (process.env.NODE_ENV === "development") {
-    client
-      .setEndpoint("http://localhost/v1")
-      .setProject("673e5e130010788ad4c9");
-  } else {
-    client
-      .setEndpoint("https://appwrite.io/v1")
-      .setProject("671d9734ace647d7440b");
-  }
-
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -42,6 +31,8 @@ export default function App() {
         router={createBrowserRouter(
           createRoutesFromElements(
             <Route path="/">
+              <Route path="/dashboard/:code" element={<Dashboard />} />
+              <Route path="/linkedin-auth" element={<LinkedInAuthHandler />} />
               <Route
                 path="/login"
                 element={
@@ -55,7 +46,6 @@ export default function App() {
                   isUserLoggedIn ? <Dashboard /> : <Navigate to="/login" />
                 }
               />
-              <Route path="/dashboard" element={<Dashboard />} />
             </Route>,
           ),
         )}

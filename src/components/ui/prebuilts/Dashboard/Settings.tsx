@@ -20,18 +20,11 @@ export default function Settings() {
     const clientId = import.meta.env.VITE_LINKEDIN_CLIENT_ID;
     const callbackURL =
       import.meta.env.DEV === true
-        ? "http://localhost:5173/dashboard/signin-linkedin"
-        : "https://socialfollower.xyz/dashboard";
+        ? "http://localhost:5173/linkedin-auth"
+        : "https://socialfollower.xyz/linkedin-auth";
     const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${callbackURL}&scope=openid%20profile%20email`;
 
     window.open(linkedinOAuthURL);
-
-    useEffect(() => {
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const code = urlParams.get("code");
-      if (code) LoginUser(code);
-    });
   }
   return (
     <div className="flex justify-center gap-4 mb-24">
