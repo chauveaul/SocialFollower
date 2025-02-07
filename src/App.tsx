@@ -42,7 +42,9 @@ export default function App() {
             <Route path="/">
               <Route
                 path="/login"
-                element={isUserLoggedIn ? <Dashboard /> : <Login />}
+                element={
+                  isUserLoggedIn ? <Navigate to="/dashboard" /> : <Login />
+                }
               />
               <Route path="/register" element={<Register />} />
               <Route

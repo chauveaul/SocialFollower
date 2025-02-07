@@ -11,10 +11,32 @@ import {
   LinkedinIcon,
   YouTubeIcon,
 } from "@/assets/Icons";
+import { logoutUser } from "@/lib/server/auth/controller";
+import { LoginUser } from "@/lib/server/linkedin/controller";
+import { useEffect } from "react";
 
 export default function Settings() {
+  function handleLinkedInClick() {
+    const clientId = import.meta.env.VITE_LINKEDIN_CLIENT_ID;
+    const callbackURL =
+      import.meta.env.DEV === true
+        ? "http://localhost:5173/dashboard/signin-linkedin"
+        : "";
+    const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
+      callbackURL,
+    )}&scope=r_liteprofile%20r_emailaddress`;
+
+    window.open(linkedinOAuthURL);
+
+    useEffect(() => {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const code = urlParams.get("code");
+      if (code) LoginUser(code);
+    });
+  }
   return (
-    <div className="flex justify-center gap-4">
+    <div className="flex justify-center gap-4 mb-24">
       <div className="flex flex-col gap-8 items-center max-w-[35vw] p-4 m-8">
         <h1 className="text-center text-5xl text-white mb-4">Account</h1>
         <CardTemplate
@@ -58,6 +80,9 @@ export default function Settings() {
               <Button
                 variant={"outline"}
                 className="max-w-[90%] h-12 text-2xl rounded-xl"
+                onClick={async () => {
+                  await logoutUser().then(() => window.location.reload());
+                }}
               >
                 Sign Out
               </Button>
@@ -134,7 +159,9 @@ export default function Settings() {
                     color="#ffffff"
                     opacity={0.75}
                   />
-                  <Button variant={"outline"}>Connect</Button>
+                  <Button variant={"outline"} onClick={handleLinkedInClick}>
+                    Connect
+                  </Button>
                 </div>
                 <div className="flex flex-col gap-4">
                   <InstagramIcon

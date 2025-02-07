@@ -12,7 +12,7 @@ export default function DashboardSidebar({
   return (
     <SidebarProvider>
       <SidebarTemplate />
-      <main>{children}</main>
+      <main className="overflow-hidden">{children}</main>
     </SidebarProvider>
   );
 }

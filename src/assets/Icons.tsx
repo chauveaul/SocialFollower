@@ -243,9 +243,10 @@ const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    width="24"
-    height="24"
-    color="#000000"
+    width={70}
+    height={70}
+    color={"#ffffff"}
+    opacity={0.8}
     fill="none"
     {...props}
   >
@@ -274,9 +275,10 @@ const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    width="24"
-    height="24"
-    color="#000000"
+    width={70}
+    height={70}
+    color={"#ffffff"}
+    opacity={0.8}
     fill="none"
     {...props}
   >
@@ -300,9 +302,10 @@ const YouTubeIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    width="24"
-    height="24"
-    color="#000000"
+    width={70}
+    height={70}
+    color={"#ffffff"}
+    opacity={0.8}
     fill="none"
     {...props}
   >

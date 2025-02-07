@@ -1,10 +1,10 @@
+import DashboardCarousel from "@/components/ui/prebuilts/Dashboard/DashboardCarousel";
 import DashboardSidebar from "./DashboardSidebar";
-import { LinkedInDashboard } from "@/components/ui/prebuilts/Dashboard/LinkedInDashboard";
 
 export default function Dashboard() {
   return (
-    <div className="w-full">
-      <DashboardSidebar children={<LinkedInDashboard />} />
+    <div className="w-full h-[100vh]">
+      <DashboardSidebar children={<DashboardCarousel />} />
     </div>
   );
 }

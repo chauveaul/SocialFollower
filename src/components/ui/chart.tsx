@@ -87,7 +87,6 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
                       theme as keyof typeof itemConfig.theme
                     ] || itemConfig.color;
                   // Check if the color is a gradient
-                  console.log(`Color: ${color}`);
                   if (color && color.startsWith("linear-gradient")) {
                     return `  --color-${key}: ${color};`;
                   }

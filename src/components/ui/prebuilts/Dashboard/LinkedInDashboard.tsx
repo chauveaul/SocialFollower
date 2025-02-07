@@ -23,7 +23,7 @@ export function LinkedInDashboard() {
     { month: "July", followers: 467 },
   ];
   return (
-    <div className="m-4 mt-16 flex flex-col gap-8 w-full">
+    <div className="m-4 mt-16 flex flex-col gap-8 w-[95%]">
       {/*NOTE:  ^^^^ This will be the overall container that will define the size of the section */}
       {/* Important for the correct sizing to see the next tab appear at the bottom of the screen */}
       <div className="flex justify-between">
