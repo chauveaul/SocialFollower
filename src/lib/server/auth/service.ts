@@ -34,7 +34,6 @@ export default class AuthService {
   static async loginUser(formData: LoginFormData) {
     const { email, password } = formData;
     const account = new Account(client);
-
     const result = await account.createEmailPasswordSession(email, password);
 
     console.log(result);
