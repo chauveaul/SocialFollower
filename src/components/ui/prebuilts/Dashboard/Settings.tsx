@@ -22,9 +22,7 @@ export default function Settings() {
       import.meta.env.DEV === true
         ? "http://localhost:5173/dashboard/signin-linkedin"
         : "https://socialfollower.xyz/dashboard";
-    const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(
-      callbackURL,
-    )}&scope=liteprofile%20emailaddress`;
+    const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${callbackURL}&scope=liteprofile%20emailaddress`;
 
     window.open(linkedinOAuthURL);
 
