@@ -19,7 +19,7 @@ export default function Login() {
       await loginUser(data);
       process.env.NODE_ENV === "development"
         ? (window.location.href = "http://localhost:5173/dashboard")
-        : (window.location.href = "");
+        : (window.location.href = "https://socialfollower.xyz/dashboard");
     } catch (error) {
       if (error instanceof Error && error.message.includes("password")) {
         setError("password", {

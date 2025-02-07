@@ -20,7 +20,9 @@ export default function App() {
       .setEndpoint("http://localhost/v1")
       .setProject("673e5e130010788ad4c9");
   } else {
-    client.setProject("671d9734ace647d7440b");
+    client
+      .setEndpoint("https://appwrite.io/v1")
+      .setProject("671d9734ace647d7440b");
   }
 
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
