@@ -14,10 +14,10 @@ export default class LinkedInService {
 
     const promise = functions.createExecution("67a64f59002be4d49e85", code);
     promise.then(
-      (res) => {
+      async (res) => {
         if (res.status === "completed") {
           //Add appwrite database
-          databases.createDocument(
+          await databases.createDocument(
             "67a67744001f4587566f",
             "LinkedInAuth",
             accountId,
