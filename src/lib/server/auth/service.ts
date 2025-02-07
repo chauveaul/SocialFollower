@@ -65,4 +65,12 @@ export default class AuthService {
 
     return result;
   }
+
+  static async getUserInfo(): Promise<{ $id: string }> {
+    const account = new Account(client);
+
+    const result = await account.get();
+
+    return result;
+  }
 }

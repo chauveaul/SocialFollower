@@ -20,3 +20,7 @@ export async function logoutUser() {
 export async function isLoggedIn(): Promise<boolean> {
   return AuthService.isLoggedIn();
 }
+
+export async function getUserInfo(): Promise<{ $id: string }> {
+  return AuthService.getUserInfo();
+}
