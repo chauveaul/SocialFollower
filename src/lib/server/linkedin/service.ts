@@ -21,7 +21,7 @@ export default class LinkedInService {
             "67a67744001f4587566f",
             "LinkedInAuth",
             accountId,
-            res.responseBody,
+            { accountToken: res.responseBody },
             [Permission.write(Role.any())],
           );
           window.location.href = "https://socialfollower.xyz/Dashboard";
