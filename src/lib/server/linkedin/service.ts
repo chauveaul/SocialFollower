@@ -10,7 +10,10 @@ export default class LinkedInService {
     client.setProject("671d9734ace647d7440b");
 
     const account = await getUserInfo();
+    console.log("issue getting account id");
     const accountId = account.$id;
+
+    console.log("Issue creating document");
 
     const promise = functions.createExecution("67a64f59002be4d49e85", code);
     promise.then(
