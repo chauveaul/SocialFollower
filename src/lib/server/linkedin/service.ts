@@ -20,20 +20,22 @@ export default class LinkedInService {
       async (res) => {
         if (res.status === "completed") {
           //TODO: check if document exists
-          if (
+          try {
             await databases.getDocument(
               "67a67744001f4587566f",
               "LinkedInAuth",
               accountId,
-            )
-          ) {
+            );
+
+            //If no errors, it means the document exists
             await databases.updateDocument(
               "67a67744001f4587566f",
               "LinkedInAuth",
               accountId,
               { accessToken: res.responseBody },
             );
-          } else {
+          } catch (error) {
+            //Otherwise, create the document since it does not exist
             await databases.createDocument(
               "67a67744001f4587566f",
               "LinkedInAuth",
