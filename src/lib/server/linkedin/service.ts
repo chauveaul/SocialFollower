@@ -19,14 +19,36 @@ export default class LinkedInService {
     promise.then(
       async (res) => {
         if (res.status === "completed") {
-          //Add appwrite database
-          await databases.createDocument(
-            "67a67744001f4587566f",
-            "LinkedInAuth",
-            accountId,
-            { accessToken: res.responseBody },
-            [Permission.write(Role.any())],
-          );
+          //TODO: check if document exists
+          if (
+            await databases.getDocument(
+              "67a67744001f4587566f",
+              "LinkedInAuth",
+              accountId,
+            )
+          ) {
+            await databases.updateDocument(
+              "67a67744001f4587566f",
+              "LinkedInAuth",
+              accountId,
+              { accessToken: res.responseBody },
+            );
+          } else {
+            await databases.createDocument(
+              "67a67744001f4587566f",
+              "LinkedInAuth",
+              accountId,
+              { accessToken: res.responseBody },
+              [
+                Permission.write(Role.user(accountId)),
+                Permission.read(Role.user(accountId)),
+                Permission.update(Role.user(accountId)),
+              ],
+            );
+          }
+          //If true:
+          //update document
+          //If false:
           window.location.href = "https://socialfollower.xyz/Dashboard";
         }
         console.log(res);
