@@ -10,54 +10,41 @@ export default class LinkedInService {
     client.setProject("671d9734ace647d7440b");
 
     const account = await getUserInfo();
-    console.log("issue getting account id");
     const accountId = account.$id;
 
-    console.log("Issue creating document");
-
     const promise = functions.createExecution("67a64f59002be4d49e85", code);
-    promise.then(
-      async (res) => {
-        if (res.status === "completed") {
-          //TODO: check if document exists
-          try {
-            await databases.getDocument(
-              "67a67744001f4587566f",
-              "LinkedInAuth",
-              accountId,
-            );
+    promise.then(async (res) => {
+      if (res.status === "completed") {
+        try {
+          await databases.getDocument(
+            "67a67744001f4587566f",
+            "LinkedInAuth",
+            accountId,
+          );
 
-            //If no errors, it means the document exists
-            await databases.updateDocument(
-              "67a67744001f4587566f",
-              "LinkedInAuth",
-              accountId,
-              { accessToken: res.responseBody },
-            );
-          } catch (error) {
-            //Otherwise, create the document since it does not exist
-            await databases.createDocument(
-              "67a67744001f4587566f",
-              "LinkedInAuth",
-              accountId,
-              { accessToken: res.responseBody },
-              [
-                Permission.write(Role.user(accountId)),
-                Permission.read(Role.user(accountId)),
-                Permission.update(Role.user(accountId)),
-              ],
-            );
-          }
-          //If true:
-          //update document
-          //If false:
-          window.location.href = "https://socialfollower.xyz/Dashboard";
+          //If no errors, it means the document exists
+          await databases.updateDocument(
+            "67a67744001f4587566f",
+            "LinkedInAuth",
+            accountId,
+            { accessToken: res.responseBody },
+          );
+        } catch (error) {
+          //Otherwise, create the document since it does not exist
+          await databases.createDocument(
+            "67a67744001f4587566f",
+            "LinkedInAuth",
+            accountId,
+            { accessToken: res.responseBody },
+            [
+              Permission.write(Role.user(accountId)),
+              Permission.read(Role.user(accountId)),
+              Permission.update(Role.user(accountId)),
+            ],
+          );
         }
-        console.log(res);
-      },
-      (error) => {
-        console.log(error);
-      },
-    );
+        window.location.href = "https://socialfollower.xyz/Dashboard";
+      }
+    });
   }
 }

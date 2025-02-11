@@ -18,7 +18,6 @@ export default function App() {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("Func");
       setIsUserLoggedIn(await isLoggedIn());
     };
 

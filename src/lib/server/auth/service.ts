@@ -34,17 +34,12 @@ export default class AuthService {
   static async loginUser(formData: LoginFormData) {
     const { email, password } = formData;
     const account = new Account(client);
-    const result = await account.createEmailPasswordSession(email, password);
-
-    console.log(result);
+    await account.createEmailPasswordSession(email, password);
   }
 
   static async loginUserID(userID: string, secret: string) {
     const account = new Account(client);
-
-    const result = await account.createSession(userID, secret);
-
-    console.log(result);
+    await account.createSession(userID, secret);
   }
 
   static async isLoggedIn(): Promise<boolean> {
