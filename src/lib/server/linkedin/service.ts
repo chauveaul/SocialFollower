@@ -1,11 +1,15 @@
-import { Client, Functions, Databases, Permission, Role } from "appwrite";
+import { Client, Functions, Permission, Role } from "appwrite";
+import {
+  getDocument,
+  updateDocument,
+  createDocument,
+} from "@/lib/server/database/controller";
 import { getUserInfo } from "@/lib/server/auth/controller";
 
 export default class LinkedInService {
   static async LoginUser(code: string) {
     const client = new Client();
     const functions = new Functions(client);
-    const databases = new Databases(client);
 
     client.setProject("671d9734ace647d7440b");
 
@@ -16,14 +20,10 @@ export default class LinkedInService {
     promise.then(async (res) => {
       if (res.status === "completed") {
         try {
-          await databases.getDocument(
-            "67a67744001f4587566f",
-            "LinkedInAuth",
-            accountId,
-          );
+          await getDocument("67a67744001f4587566f", "LinkedInAuth", accountId);
 
           //If no errors, it means the document exists
-          await databases.updateDocument(
+          await updateDocument(
             "67a67744001f4587566f",
             "LinkedInAuth",
             accountId,
@@ -31,7 +31,7 @@ export default class LinkedInService {
           );
         } catch (error) {
           //Otherwise, create the document since it does not exist
-          await databases.createDocument(
+          await createDocument(
             "67a67744001f4587566f",
             "LinkedInAuth",
             accountId,

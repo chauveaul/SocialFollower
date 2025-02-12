@@ -1,3 +1,4 @@
+import { getDocument } from "@/lib/server/database/controller";
 import { GenericInput } from "@/components/ui/prebuilts/GenericInput";
 import { Button } from "@/components/ui/button";
 import { CardTemplate } from "../CardTemplate";
@@ -11,9 +12,27 @@ import {
   LinkedinIcon,
   YouTubeIcon,
 } from "@/assets/Icons";
-import { logoutUser } from "@/lib/server/auth/controller";
+import { getUserInfo, logoutUser } from "@/lib/server/auth/controller";
+import { useEffect, useState } from "react";
 
 export default function Settings() {
+  const [linkedInConnectionState, setLinkedInConnectionState] = useState<
+    "connected" | "disconnected"
+  >("disconnected");
+
+  useEffect(() => {
+    async function serviceCall() {
+      const account = await getUserInfo();
+      const accountId = account.$id;
+      try {
+        await getDocument("67a67744001f4587566f", "LinkedInAuth", accountId);
+        setLinkedInConnectionState("connected");
+      } catch (err) { }
+    }
+
+    serviceCall();
+  }, []);
+
   function handleLinkedInClick() {
     const clientId = import.meta.env.VITE_LINKEDIN_CLIENT_ID;
     const callbackURL =
@@ -149,6 +168,16 @@ export default function Settings() {
                     opacity={0.75}
                   />
                   <Button variant={"outline"} onClick={handleLinkedInClick}>
+                    <p
+                      className={
+                        linkedInConnectionState === "connected"
+                          ? "text-red"
+                          : ""
+                      }
+                    >
+                      {linkedInConnectionState[0].toUpperCase() +
+                        linkedInConnectionState.substring(1)}
+                    </p>
                     Connect
                   </Button>
                 </div>
