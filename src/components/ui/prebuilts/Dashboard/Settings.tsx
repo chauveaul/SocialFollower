@@ -19,15 +19,13 @@ export default function Settings() {
   const [linkedInConnectionState, setLinkedInConnectionState] = useState<
     "connect" | "disconnect"
   >("connect");
-  //  const [instagramConnectionState, setInstagramConnectionState] = useState<
-  //    "connect" | "disconnect"
-  //  >("connect");
-  //  const [tikTokConnectionState, setTikTokConnectionState] = useState<
-  //    "connect" | "disconnect"
-  //  >("connect");
-  //  const [youTubeConnectionState, setYouTubeConnectionState] = useState<
-  //    "connect" | "disconnect"
-  //  >("connect");
+  const [instagramConnectionState, setInstagramConnectionState] = useState<
+    "connect" | "disconnect"
+  >("connect");
+  const [tikTokConnectionState] = useState<"connect" | "disconnect">("connect");
+  const [youTubeConnectionState] = useState<"connect" | "disconnect">(
+    "connect",
+  );
 
   useEffect(() => {
     async function serviceCall() {
@@ -169,7 +167,7 @@ export default function Settings() {
             className="w-full"
             cardContent={
               <div className="flex justify-between pt-6">
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col items-center gap-4">
                   <LinkedinIcon
                     width={92}
                     height={92}
@@ -189,32 +187,41 @@ export default function Settings() {
                     </p>
                   </Button>
                 </div>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col items-center gap-4">
                   <InstagramIcon
                     width={92}
                     height={92}
                     color="#ffffff"
                     opacity={0.75}
                   />
-                  <Button variant={"outline"}></Button>
+                  <Button variant={"outline"}>
+                    {instagramConnectionState[0].toUpperCase() +
+                      instagramConnectionState.substring(1)}
+                  </Button>
                 </div>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col items-center gap-4">
                   <TikTokIcon
                     width={92}
                     height={92}
                     color="#ffffff"
                     opacity={0.75}
                   />
-                  <Button variant={"outline"}></Button>
+                  <Button variant={"outline"}>
+                    {tikTokConnectionState[0].toUpperCase() +
+                      tikTokConnectionState.substring(1)}
+                  </Button>
                 </div>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col items-center gap-4">
                   <YouTubeIcon
                     width={92}
                     height={92}
                     color="#ffffff"
                     opacity={0.75}
                   />
-                  <Button variant={"outline"}></Button>
+                  <Button variant={"outline"}>
+                    {youTubeConnectionState[0].toUpperCase() +
+                      youTubeConnectionState.substring(1)}
+                  </Button>
                 </div>
               </div>
             }
