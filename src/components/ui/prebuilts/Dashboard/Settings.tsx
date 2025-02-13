@@ -1,4 +1,4 @@
-import { getDocument } from "@/lib/server/database/controller";
+import { deleteDocument, getDocument } from "@/lib/server/database/controller";
 import { GenericInput } from "@/components/ui/prebuilts/GenericInput";
 import { Button } from "@/components/ui/button";
 import { CardTemplate } from "../CardTemplate";
@@ -41,14 +41,27 @@ export default function Settings() {
   }, []);
 
   function handleLinkedInClick() {
-    const clientId = import.meta.env.VITE_LINKEDIN_CLIENT_ID;
-    const callbackURL =
-      import.meta.env.DEV === true
-        ? "http://localhost:5173/linkedin-auth"
-        : "https://socialfollower.xyz/linkedin-auth";
-    const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${callbackURL}&scope=openid%20profile%20email`;
+    if (linkedInConnectionState === "connect") {
+      const clientId = import.meta.env.VITE_LINKEDIN_CLIENT_ID;
+      const callbackURL =
+        import.meta.env.DEV === true
+          ? "http://localhost:5173/linkedin-auth"
+          : "https://socialfollower.xyz/linkedin-auth";
+      const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${clientId}&redirect_uri=${callbackURL}&scope=openid%20profile%20email`;
 
-    window.open(linkedinOAuthURL);
+      window.open(linkedinOAuthURL);
+    } else {
+      // TODO: call delete document here for the linkedin document containing the user access token
+      useEffect(() => {
+        async function deleteDoc() {
+          const account = await getUserInfo();
+          const accountId = account.$id;
+
+          deleteDocument("67a67744001f4587566f", "LinkedInAuth", accountId);
+        }
+        deleteDoc();
+      });
+    }
   }
   return (
     <div className="flex justify-center gap-4 mb-24">
@@ -178,7 +191,7 @@ export default function Settings() {
                     <p
                       className={
                         linkedInConnectionState === "disconnect"
-                          ? "text-red"
+                          ? "text-[#DB6262]"
                           : ""
                       }
                     >

@@ -1,4 +1,5 @@
 import DatabaseService from "@/lib/server/database/service";
+import { Databases } from "appwrite";
 
 export async function getDocument(
   databaseId: string,
@@ -36,4 +37,12 @@ export async function updateDocument(
     documentId,
     content,
   );
+}
+
+export async function deleteDocument(
+  databaseId: string,
+  collectionId: string,
+  documentId: string,
+) {
+  return DatabaseService.deleteDocument(databaseId, collectionId, documentId);
 }

@@ -1,4 +1,5 @@
 import { Client, Databases } from "appwrite";
+import { Database } from "lucide-react";
 
 const client =
   process.env.NODE_ENV === "development"
@@ -61,6 +62,17 @@ export default class DatabaseService {
     const databases = new Databases(client);
 
     databases.updateDocument(databaseId, collectionId, documentId, content);
+    return 200;
+  }
+
+  static async deleteDocument(
+    databaseId: string,
+    collectionId: string,
+    documentId: string,
+  ) {
+    const databases = new Databases(client);
+
+    databases.deleteDocument(databaseId, collectionId, documentId);
     return 200;
   }
 }
