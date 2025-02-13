@@ -1,5 +1,4 @@
 import DatabaseService from "@/lib/server/database/service";
-import { Databases } from "appwrite";
 
 export async function getDocument(
   databaseId: string,
