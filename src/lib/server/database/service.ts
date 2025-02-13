@@ -1,5 +1,4 @@
 import { Client, Databases } from "appwrite";
-import { Database } from "lucide-react";
 
 const client =
   process.env.NODE_ENV === "development"
