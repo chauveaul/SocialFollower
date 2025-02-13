@@ -17,8 +17,17 @@ import { useEffect, useState } from "react";
 
 export default function Settings() {
   const [linkedInConnectionState, setLinkedInConnectionState] = useState<
-    "connected" | "disconnected"
-  >("disconnected");
+    "connect" | "disconnect"
+  >("connect");
+  const [instagramConnectionState, setInstagramConnectionState] = useState<
+    "connect" | "disconnect"
+  >("connect");
+  const [tikTokConnectionState, setTikTokConnectionState] = useState<
+    "connect" | "disconnect"
+  >("connect");
+  const [youTubeConnectionState, setYouTubeConnectionState] = useState<
+    "connect" | "disconnect"
+  >("connect");
 
   useEffect(() => {
     async function serviceCall() {
@@ -26,7 +35,7 @@ export default function Settings() {
       const accountId = account.$id;
       try {
         await getDocument("67a67744001f4587566f", "LinkedInAuth", accountId);
-        setLinkedInConnectionState("connected");
+        setLinkedInConnectionState("disconnect");
       } catch (err) {}
     }
 
@@ -170,7 +179,7 @@ export default function Settings() {
                   <Button variant={"outline"} onClick={handleLinkedInClick}>
                     <p
                       className={
-                        linkedInConnectionState === "connected"
+                        linkedInConnectionState === "disconnect"
                           ? "text-red"
                           : ""
                       }
