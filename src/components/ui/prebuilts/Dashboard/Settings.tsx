@@ -27,7 +27,7 @@ export default function Settings() {
       try {
         await getDocument("67a67744001f4587566f", "LinkedInAuth", accountId);
         setLinkedInConnectionState("connected");
-      } catch (err) { }
+      } catch (err) {}
     }
 
     serviceCall();
@@ -178,7 +178,6 @@ export default function Settings() {
                       {linkedInConnectionState[0].toUpperCase() +
                         linkedInConnectionState.substring(1)}
                     </p>
-                    Connect
                   </Button>
                 </div>
                 <div className="flex flex-col gap-4">
@@ -188,7 +187,7 @@ export default function Settings() {
                     color="#ffffff"
                     opacity={0.75}
                   />
-                  <Button variant={"outline"}>Connect</Button>
+                  <Button variant={"outline"}></Button>
                 </div>
                 <div className="flex flex-col gap-4">
                   <TikTokIcon
@@ -197,7 +196,7 @@ export default function Settings() {
                     color="#ffffff"
                     opacity={0.75}
                   />
-                  <Button variant={"outline"}>Connect</Button>
+                  <Button variant={"outline"}></Button>
                 </div>
                 <div className="flex flex-col gap-4">
                   <YouTubeIcon
@@ -206,7 +205,7 @@ export default function Settings() {
                     color="#ffffff"
                     opacity={0.75}
                   />
-                  <Button variant={"outline"}>Connect</Button>
+                  <Button variant={"outline"}></Button>
                 </div>
               </div>
             }
