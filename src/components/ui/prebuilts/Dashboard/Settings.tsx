@@ -19,9 +19,9 @@ export default function Settings() {
   const [linkedInConnectionState, setLinkedInConnectionState] = useState<
     "connect" | "disconnect"
   >("connect");
-  const [instagramConnectionState, setInstagramConnectionState] = useState<
-    "connect" | "disconnect"
-  >("connect");
+  const [instagramConnectionState] = useState<"connect" | "disconnect">(
+    "connect",
+  );
   const [tikTokConnectionState] = useState<"connect" | "disconnect">("connect");
   const [youTubeConnectionState] = useState<"connect" | "disconnect">(
     "connect",
