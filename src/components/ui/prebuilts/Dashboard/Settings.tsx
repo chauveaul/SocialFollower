@@ -52,15 +52,13 @@ export default function Settings() {
       window.open(linkedinOAuthURL);
     } else {
       // TODO: call delete document here for the linkedin document containing the user access token
-      useEffect(() => {
-        async function deleteDoc() {
-          const account = await getUserInfo();
-          const accountId = account.$id;
+      async function deleteDoc() {
+        const account = await getUserInfo();
+        const accountId = account.$id;
 
-          deleteDocument("67a67744001f4587566f", "LinkedInAuth", accountId);
-        }
-        deleteDoc();
-      });
+        deleteDocument("67a67744001f4587566f", "LinkedInAuth", accountId);
+      }
+      deleteDoc();
     }
   }
   return (
