@@ -19,15 +19,15 @@ export default function Settings() {
   const [linkedInConnectionState, setLinkedInConnectionState] = useState<
     "connect" | "disconnect"
   >("connect");
-  const [instagramConnectionState, setInstagramConnectionState] = useState<
-    "connect" | "disconnect"
-  >("connect");
-  const [tikTokConnectionState, setTikTokConnectionState] = useState<
-    "connect" | "disconnect"
-  >("connect");
-  const [youTubeConnectionState, setYouTubeConnectionState] = useState<
-    "connect" | "disconnect"
-  >("connect");
+  //  const [instagramConnectionState, setInstagramConnectionState] = useState<
+  //    "connect" | "disconnect"
+  //  >("connect");
+  //  const [tikTokConnectionState, setTikTokConnectionState] = useState<
+  //    "connect" | "disconnect"
+  //  >("connect");
+  //  const [youTubeConnectionState, setYouTubeConnectionState] = useState<
+  //    "connect" | "disconnect"
+  //  >("connect");
 
   useEffect(() => {
     async function serviceCall() {
