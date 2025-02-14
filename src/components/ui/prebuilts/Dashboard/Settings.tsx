@@ -19,9 +19,9 @@ export default function Settings() {
   const [linkedInConnectionState, setLinkedInConnectionState] = useState<
     "connect" | "disconnect"
   >("connect");
-  const [instagramConnectionState] = useState<"connect" | "disconnect">(
-    "connect",
-  );
+  const [instagramConnectionState, setInstagramConnectionState] = useState<
+    "connect" | "disconnect"
+  >("connect");
   const [tikTokConnectionState] = useState<"connect" | "disconnect">("connect");
   const [youTubeConnectionState] = useState<"connect" | "disconnect">(
     "connect",
@@ -63,6 +63,30 @@ export default function Settings() {
       }
       deleteDoc();
       setLinkedInConnectionState("connect");
+    }
+  }
+
+  function handleInstagramClick() {
+    if (instagramConnectionState === "connect") {
+      const clientId = import.meta.env.VITE_INSTAGRAM_CLIENT_ID;
+      const callbackURL =
+        import.meta.env.DEV === true
+          ? "http://localhost:5173/instagram-auth"
+          : "https://socialfollower.xyz/instagram-auth";
+
+      //const instagramOAuthURL = `https://api.instagram.com/oauth/authorize?client_id=${clientId}&redirect_uri=${callbackURL}&response_type=code&scope=${scope}`;
+      const instagramOAuthURL = `https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=${clientId}&redirect_uri=${callbackURL}&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish%2Cinstagram_business_manage_insights`;
+
+      window.open(instagramOAuthURL);
+    } else {
+      async function deleteDoc() {
+        const account = await getUserInfo();
+        const accountId = account.$id;
+
+        deleteDocument("67a67744001f4587566f", "InstagramAuth", accountId);
+      }
+      deleteDoc();
+      setInstagramConnectionState("connect");
     }
   }
 
@@ -210,9 +234,17 @@ export default function Settings() {
                     color="#ffffff"
                     opacity={0.75}
                   />
-                  <Button variant={"outline"}>
-                    {instagramConnectionState[0].toUpperCase() +
-                      instagramConnectionState.substring(1)}
+                  <Button variant={"outline"} onClick={handleInstagramClick}>
+                    <p
+                      className={
+                        instagramConnectionState === "disconnect"
+                          ? "text-[#DB6262]"
+                          : ""
+                      }
+                    >
+                      {instagramConnectionState[0].toUpperCase() +
+                        instagramConnectionState.substring(1)}
+                    </p>
                   </Button>
                 </div>
                 <div className="flex flex-col items-center gap-4">
