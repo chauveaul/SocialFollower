@@ -19,30 +19,28 @@ export default class LinkedInService {
     const promise = functions.createExecution("67a64f59002be4d49e85", code);
     promise.then(async (res) => {
       if (res.status === "completed") {
-        try {
-          await getDocument("67a67744001f4587566f", "LinkedInAuth", accountId);
-
-          //If no errors, it means the document exists
-          await updateDocument(
-            "67a67744001f4587566f",
-            "LinkedInAuth",
-            accountId,
-            { accessToken: res.responseBody },
-          );
-        } catch (error) {
-          //Otherwise, create the document since it does not exist
-          await createDocument(
-            "67a67744001f4587566f",
-            "LinkedInAuth",
-            accountId,
-            { accessToken: res.responseBody },
-            [
-              Permission.write(Role.user(accountId)),
-              Permission.read(Role.user(accountId)),
-              Permission.update(Role.user(accountId)),
-            ],
-          );
-        }
+        getDocument("67a67744001f4587566f", "LinkedInAuth", accountId)
+          .then(async () => {
+            await updateDocument(
+              "67a67744001f4587566f",
+              "LinkedInAuth",
+              accountId,
+              { accessToken: res.responseBody },
+            );
+          })
+          .catch(async () => {
+            await createDocument(
+              "67a67744001f4587566f",
+              "LinkedInAuth",
+              accountId,
+              { accessToken: res.responseBody },
+              [
+                Permission.write(Role.user(accountId)),
+                Permission.read(Role.user(accountId)),
+                Permission.update(Role.user(accountId)),
+              ],
+            );
+          });
         window.location.href = "https://socialfollower.xyz/Dashboard";
       }
     });
