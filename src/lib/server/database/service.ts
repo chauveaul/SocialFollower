@@ -1,4 +1,4 @@
-import { Client, Databases } from "appwrite";
+import { AppwriteException, Client, Databases } from "appwrite";
 
 const client =
   process.env.NODE_ENV === "development"
@@ -25,7 +25,7 @@ export default class DatabaseService {
       );
       return result;
     } catch (error) {
-      console.log(error);
+      throw new AppwriteException("Document");
     }
   }
 

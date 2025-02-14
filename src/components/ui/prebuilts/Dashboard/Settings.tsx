@@ -32,6 +32,7 @@ export default function Settings() {
       const account = await getUserInfo();
       const accountId = account.$id;
       getDocument("67a67744001f4587566f", "LinkedInAuth", accountId)
+        .then(() => console.log("true"))
         .then(() => {
           setLinkedInConnectionState("disconnect");
         })

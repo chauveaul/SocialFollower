@@ -47,4 +47,16 @@ export default class LinkedInService {
       }
     });
   }
+
+  static async fetchStats(accountId: string) {
+    const accessToken = await getDocument(
+      "67a67744001f4587566f",
+      "LinkedInAuth",
+      accountId,
+    );
+
+    //TODO: Figure out fetching logic here
+  }
+
+  static async formatStats() {}
 }
