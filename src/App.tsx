@@ -10,6 +10,7 @@ import Login from "@/app/auth/Login";
 import Register from "@/app/auth/Register";
 import Dashboard from "@/app/dashboard/Dashboard";
 import LinkedInAuthHandler from "@/components/ui/prebuilts/Auth/LinkedInAuthHandler";
+import InstagramAuthHandler from "@/components/ui/prebuilts/Auth/InstagramAuthHandler";
 import { isLoggedIn } from "@/lib/server/auth/controller";
 import { useEffect, useState } from "react";
 
@@ -32,6 +33,10 @@ export default function App() {
             <Route path="/">
               <Route path="/dashboard/:code" element={<Dashboard />} />
               <Route path="/linkedin-auth" element={<LinkedInAuthHandler />} />
+              <Route
+                path="/instagram-auth"
+                element={<InstagramAuthHandler />}
+              />
               <Route
                 path="/login"
                 element={
