@@ -31,7 +31,7 @@ export default function App() {
         router={createBrowserRouter(
           createRoutesFromElements(
             <Route path="/">
-              <Route path="/dashboard/:code" element={<Dashboard />} />
+              <Route path="/dashboard/" element={<Dashboard />} />
               <Route path="/linkedin-auth" element={<LinkedInAuthHandler />} />
               <Route
                 path="/instagram-auth"
