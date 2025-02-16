@@ -9,6 +9,7 @@ import {
 import Login from "@/app/auth/Login";
 import Register from "@/app/auth/Register";
 import Dashboard from "@/app/dashboard/Dashboard";
+import PrivacyPolicy from "@/app/legal/PrivacyPolicy";
 import LinkedInAuthHandler from "@/components/ui/prebuilts/Auth/LinkedInAuthHandler";
 import InstagramAuthHandler from "@/components/ui/prebuilts/Auth/InstagramAuthHandler";
 import { isLoggedIn } from "@/lib/server/auth/controller";
@@ -44,6 +45,7 @@ export default function App() {
                 }
               />
               <Route path="/register" element={<Register />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route
                 path="/dashboard"
                 element={
