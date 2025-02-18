@@ -74,6 +74,8 @@ export default function Settings() {
           ? "http://localhost:5173/instagram-auth"
           : "https://socialfollower.xyz/instagram-auth";
 
+      //NOTE: Kind of blocked right now, need to make a business to verify it with meta
+
       //const instagramOAuthURL = `https://api.instagram.com/oauth/authorize?client_id=${clientId}&redirect_uri=${callbackURL}&response_type=code&scope=${scope}`;
       const instagramOAuthURL = `https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=${clientId}&redirect_uri=${callbackURL}&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish%2Cinstagram_business_manage_insights`;
 
@@ -91,7 +93,7 @@ export default function Settings() {
   }
 
   return (
-    <div className="flex justify-center gap-4 mb-24">
+    <div className="dashboard-settings flex justify-center gap-4 mb-24">
       <div className="flex flex-col gap-8 items-center max-w-[35vw] p-4 m-8">
         <h1 className="text-center text-5xl text-white mb-4">Account</h1>
         <CardTemplate

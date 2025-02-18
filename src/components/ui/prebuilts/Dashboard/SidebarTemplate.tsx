@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChartIcon, UserIcon, SettingsIcon } from "@/assets/Icons";
 import {
   Sidebar,
@@ -14,6 +14,22 @@ import {
 
 export function SidebarTemplate() {
   const [focused, setFocused] = useState("charts");
+
+  useEffect(() => {
+    if (focused === "charts") {
+      document
+        .querySelector(".dashboard-carousel")
+        ?.scrollIntoView({ behavior: "smooth" });
+    } else if (focused === "profile") {
+      document
+        .querySelector(".dashboard-profile")
+        ?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      document
+        .querySelector(".dashboard-settings")
+        ?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [focused]);
 
   return (
     <Sidebar variant="floating" collapsible="icon">

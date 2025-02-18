@@ -11,7 +11,7 @@ import { YouTubeDashboard } from "./YouTubeDashboard";
 
 export default function DashboardCarousel() {
   return (
-    <Carousel orientation="vertical">
+    <Carousel className="dashboard-carousel" orientation="vertical">
       <CarouselContent>
         <CarouselItem key={1}>
           <LinkedInDashboard />
